@@ -1,0 +1,30 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Word</title>
+    <link href="{% static 'css/main.css' %}" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Экран «Слово» -->
+    <div id="word-screen" class="screen">
+        <h1>桌子</h1>
+        <p>Стол — zhuōzi</p>
+        <div class="examples">
+            <p>桌子上有一本书。(На столе лежит книга.)</p>
+            <p>他把剪刀放在桌子上。(Он положил ножницы на стол.)</p>
+        </div>
+        <button class="add-btn">+</button>
+        <div class="bottom-nav">
+            <a href="#main">🏠</a>
+            <a href="#dictionary">📘</a>
+            <a href="#add">+</a>
+            <a href="#profile">👤</a>
+        </div>
+    </div>
+</body>
+</html>

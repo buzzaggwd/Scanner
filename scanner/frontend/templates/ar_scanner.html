@@ -1,0 +1,26 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AR_scanner</title>
+    <link href="{% static 'css/main.css' %}" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Экран «Сканер» -->
+    <div id="scanner-screen" class="screen">
+        <img src="background-cup.jpg" alt="Чашка на столе" class="background-img blur">
+        <div class="scanner-area">
+            <p>Наведите камеру на иероглиф</p>
+        </div>
+        <div class="scanner-controls">
+            <button class="flash-btn">⚡</button>
+            <button class="scan-btn">Сканировать</button>
+            <button class="pen-btn">✏️</button>
+        </div>
+    </div>
+</body>
+</html>

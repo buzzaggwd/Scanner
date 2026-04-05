@@ -1,0 +1,135 @@
+/* .title {
+    width: 115px;
+    height: 27px;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 21px;
+    line-height: 25px;
+    text-align: center;
+    letter-spacing: -0.04em;
+    color: #000000;
+} */
+
+
+/* Общие стили */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f5f5f5;
+}
+
+/* .screen {
+    display: none; 
+    padding: 20px;
+} */
+
+/* Активный экран */
+.screen.active {
+    display: block;
+}
+
+/* Цвета */
+.green-btn {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.add-btn {
+    background-color: #333;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 50%;
+    cursor: pointer;
+    position: absolute;
+    bottom: 60px;
+    right: 20px;
+}
+
+/* Навигация вверху */
+.top-nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background-color: white;
+    display: flex;
+    justify-content: space-around;
+    padding: 10px 0;
+}
+
+.top-nav a {
+    color: #333;
+    text-decoration: none;
+    font-size: 20px;
+}
+
+/* Главный экран */
+#main-screen .challenge-card {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#main-screen .title-main {
+    width: 115px;
+    height: 27px;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 21px;
+    line-height: 150px;
+    text-align: center;
+    letter-spacing: -0.04em;
+    color: #000000;
+    white-space: nowrap;
+    /* position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, -50%); */
+}
+
+/* Экран «Словарь» */
+.word-list li {
+    background-color: white;
+    padding: 10px;
+    margin-bottom: 5px;
+    border-radius: 5px;
+}
+
+.learned {
+    background-color: #d4edda;
+}
+
+.learning {
+    background-color: #fff3cd;
+}
+
+.repeat {
+    background-color: #f8d7da;
+}
+
+/* Экран «Уровни» */
+.level-card {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}

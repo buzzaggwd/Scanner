@@ -1,0 +1,41 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    <link href="{% static 'css/main.css' %}" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Экран «Профиль» -->
+    <div id="profile-screen" class="screen">
+        <div class="profile-card">
+            <img src="avatar.png" alt="Аватар" class="avatar">
+            <h2>Майя</h2>
+            <p>Пользователь в Китае</p>
+        </div>
+        <div class="stats">
+            <p>Слов собрано: <span>217</span></p>
+            <p>Сегодня: <span>18</span></p>
+        </div>
+        <div class="streak">3-дневный стрик 🔥</div>
+        <div class="settings">
+            <label>
+                Уведомления:
+                <input type="checkbox" checked>
+            </label>
+            <button>Сменить тему</button>
+        </div>
+        <div class="bottom-nav">
+            <a href="#main">🏠</a>
+            <a href="#dictionary">📘</a>
+            <a href="#add">+</a>
+            <a href="#profile">👤</a>
+        </div>
+    </div>
+
+</body>
+</html>

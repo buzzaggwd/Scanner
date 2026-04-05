@@ -1,0 +1,31 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dictionary</title>
+    <link href="{% static 'css/main.css' %}" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Экран «Словарь» -->
+    <div id="dictionary-screen" class="screen">
+        <h1>Словарь</h1>
+        <ul class="word-list">
+            <li class="learned">桌子 — стол — zhuōzi</li>
+            <li class="learning">笔 — ручка — bǐ</li>
+            <li class="repeat">苹果 — яблоко — píngguǒ</li>
+            <li class="learned">冰箱 — холодильник — bīngxiāng</li>
+        </ul>
+        <button class="add-btn">+</button>
+        <div class="bottom-nav">
+            <a href="#main">🏠</a>
+            <a href="#dictionary">📘</a>
+            <a href="#add">+</a>
+            <a href="#profile">👤</a>
+        </div>
+    </div>
+</body>
+</html>
