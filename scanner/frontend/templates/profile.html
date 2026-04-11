@@ -1,41 +1,75 @@
+{% extends 'base.html' %}
 {% load static %}
 
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profile</title>
-    <link href="{% static 'css/main.css' %}" rel="stylesheet">
-</head>
+{% block title %}Профиль{% endblock %}
 
-<body>
-    <!-- Экран «Профиль» -->
-    <div id="profile-screen" class="screen">
-        <div class="profile-card">
-            <img src="avatar.png" alt="Аватар" class="avatar">
-            <h2>Майя</h2>
-            <p>Пользователь в Китае</p>
-        </div>
-        <div class="stats">
-            <p>Слов собрано: <span>217</span></p>
-            <p>Сегодня: <span>18</span></p>
-        </div>
-        <div class="streak">3-дневный стрик 🔥</div>
-        <div class="settings">
-            <label>
-                Уведомления:
-                <input type="checkbox" checked>
-            </label>
-            <button>Сменить тему</button>
-        </div>
-        <div class="bottom-nav">
-            <a href="#main">🏠</a>
-            <a href="#dictionary">📘</a>
-            <a href="#add">+</a>
-            <a href="#profile">👤</a>
+{% block content %}
+    <div id="profile-screen" class="screen active">
+
+        {% include 'headder.html' %}
+
+        <div class="profile-container">
+            <!-- Карточка профиля -->
+            <div class="profile-card">
+                <div class="avatar-container">
+                    <img src="{% static 'images/avatar.svg' %}" alt="Аватар" class="avatar">
+                </div>
+                <div class="profile-info">
+                    <h2>Майя</h2>
+                    <p>Пользователь в Китае</p>
+                </div>
+
+                <!-- Статистика -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-value">217</div>
+                        <div class="stat-label">Слов собрано</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">18</div>
+                        <div class="stat-label">Сегодня</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">3</div>
+                        <div class="stat-label">Дней стрик</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Стрик -->
+            <div class="streak-card">
+                <div class="streak-info">
+                    <h3>3-дневный стрик</h3>
+                    <p>Продолжайте изучать слова каждый день!</p>
+                </div>
+                <div class="streak-icon">🔥</div>
+            </div>
+
+            <!-- Настройки -->
+            <div class="settings-card">
+                <h3 class="settings-title">Настройки</h3>
+                <div class="setting-item">
+                    <span class="setting-label">Уведомления</span>
+                    <label class="toggle-switch">
+                        <input type="checkbox" checked>
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+                <div class="setting-item">
+                    <span class="setting-label">Темная тема</span>
+                    <label class="toggle-switch">
+                        <input type="checkbox">
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+                <div class="setting-item">
+                    <span class="setting-label">Сменить тему</span>
+                    <button class="theme-btn">Выбрать</button>
+                </div>
+            </div>
         </div>
     </div>
 
-</body>
-</html>
+    {% include 'translate-modal.html' %}
+
+{% endblock %}

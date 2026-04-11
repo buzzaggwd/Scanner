@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200">
+  <!-- Фон аватара -->
+  <circle cx="100" cy="100" r="100" fill="#E3F2FD"/>
+  
+  <!-- Тело -->
+  <circle cx="100" cy="140" r="40" fill="#FFCDD2"/>
+  
+  <!-- Голова -->
+  <circle cx="100" cy="70" r="30" fill="#FFCDD2"/>
+  
+  <!-- Глаза -->
+  <circle cx="85" cy="65" r="5" fill="#212121"/>
+  <circle cx="115" cy="65" r="5" fill="#212121"/>
+  
+  <!-- Рот -->
+  <path d="M85 80 Q 100 90 115 80" fill="none" stroke="#212121" stroke-width="2"/>
+  
+  <!-- Волосы -->
+  <path d="M70 40 Q 100 20 130 40" fill="#795548"/>
+  <path d="M75 50 Q 100 35 125 50" fill="#795548"/>
+  
+  <!-- Уши -->
+  <circle cx="70" cy="70" r="5" fill="#FFCDD2"/>
+  <circle cx="130" cy="70" r="5" fill="#FFCDD2"/>
+</svg>

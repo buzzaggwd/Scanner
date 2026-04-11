@@ -1,31 +1,73 @@
+{% extends 'base.html' %}
 {% load static %}
 
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dictionary</title>
-    <link href="{% static 'css/main.css' %}" rel="stylesheet">
-</head>
+{% block title %}Словарь{% endblock %}
 
-<body>
-    <!-- Экран «Словарь» -->
-    <div id="dictionary-screen" class="screen">
-        <h1>Словарь</h1>
-        <ul class="word-list">
-            <li class="learned">桌子 — стол — zhuōzi</li>
-            <li class="learning">笔 — ручка — bǐ</li>
-            <li class="repeat">苹果 — яблоко — píngguǒ</li>
-            <li class="learned">冰箱 — холодильник — bīngxiāng</li>
-        </ul>
-        <button class="add-btn">+</button>
-        <div class="bottom-nav">
-            <a href="#main">🏠</a>
-            <a href="#dictionary">📘</a>
-            <a href="#add">+</a>
-            <a href="#profile">👤</a>
+{% block content %}
+    <div id="dictionary-screen" class="screen active">
+
+        {% include 'headder.html' %}
+
+        <div class="dictionary-container">
+            <!-- Поиск -->
+            <div class="search-container">
+                <input type="text" class="search-input" placeholder="Поиск слов...">
+            </div>
+
+            <!-- Категории -->
+            <div class="categories">
+                <button class="category-btn active">Все</button>
+                <button class="category-btn">Изучаемые</button>
+                <button class="category-btn">Выученные</button>
+            </div>
+
+            <!-- Содержимое словаря -->
+            <div class="dictionary-content">
+                <!-- Список слов -->
+                <div class="word-list-container">
+                    <h2 class="word-list-title">Слова</h2>
+                    {% for word in words %}
+                    <div class="dictionary-word-item {% if forloop.first %}active{% endif %}">
+                        <div class="word-info">
+                            <span class="word-chinese">{{ word.word }}</span>
+                            <span class="word-translation">{{ word.translation }}</span>
+                            <span class="word-pinyin">{{ word.transcription }}</span>
+                        </div>
+                        <div class="word-status learning"></div>
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <!-- Детали слова -->
+                <div class="word-details">
+                    <div class="detail-chinese">桌子</div>
+                    <div class="detail-pinyin">
+                        <span>zhuōzi</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                        </svg>
+                    </div>
+                    <div class="detail-translation">стол</div>
+
+                    <!-- Примеры использования -->
+                    <div class="example">
+                        <div class="example-chinese">桌子上面有一本书</div>
+                        <div class="example-translation">На столе лежит книга</div>
+                    </div>
+                    <div class="example">
+                        <div class="example-chinese">我的桌子是白色的</div>
+                        <div class="example-translation">Мой стол белый</div>
+                    </div>
+                    <div class="example">
+                        <div class="example-chinese">他把剪刀放在桌子上</div>
+                        <div class="example-translation">Он положил ножницы на стол</div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-</body>
-</html>
+
+    {% include 'translate-modal.html' %}
+
+{% endblock %}

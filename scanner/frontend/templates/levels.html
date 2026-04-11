@@ -1,34 +1,71 @@
+{% extends 'base.html' %}
 {% load static %}
 
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Levels</title>
-    <link href="{% static 'css/main.css' %}" rel="stylesheet">
-</head>
+{% block title %}Уровни{% endblock %}
 
-<body>
-    <!-- Экран «Уровни» -->
-    <div id="levels-screen" class="screen">
-        <img src="background-building.jpg" alt="Традиционное здание" class="background-img">
-        <div class="level-card">
-            <h2>HSK 1 — Базовый</h2>
-            <div class="progress-bar" style="width: 65%"></div>
-            <button class="green-btn">Продолжить</button>
-        </div>
-        <ul class="level-list">
-            <li>HSK 2 — Средний (заблокировано)</li>
-            <li>HSK 3 — Продвинутый (заблокировано)</li>
-        </ul>
-        <button class="add-btn">+</button>
-        <div class="bottom-nav">
-            <a href="#main">🏠</a>
-            <a href="#dictionary">📘</a>
-            <a href="#add">+</a>
-            <a href="#profile">👤</a>
+{% block content %}
+    <div id="levels-screen" class="screen active">
+
+        {% include 'headder.html' %}
+        
+        <div class="levels-container">
+            <div class="levels-content">
+                <!-- Список уровней -->
+                <div class="level-progress">
+                    <!-- HSK 1 -->
+                    <div class="level-card">
+                        <div class="level-header">
+                            <h3 class="level-title">HSK 1 — Базовый</h3>
+                            <span class="level-status">Доступен</span>
+                        </div>
+                        <div class="progress-container">
+                            <div class="progress-bar-wrapper">
+                                <div class="progress-bar" style="width: 65%"></div>
+                            </div>
+                            <div class="progress-text">65%</div>
+                        </div>
+                        <button class="continue-btn">Продолжить</button>
+                    </div>
+                    
+                    <!-- HSK 2 -->
+                    <div class="level-card locked">
+                        <div class="level-header">
+                            <h3 class="level-title">HSK 2 — Средний</h3>
+                            <span class="level-status locked">Заблокировано</span>
+                        </div>
+                        <div class="progress-container">
+                            <div class="progress-bar-wrapper">
+                                <div class="progress-bar" style="width: 0%"></div>
+                            </div>
+                            <div class="progress-text">0%</div>
+                        </div>
+                        <button class="continue-btn" disabled>Продолжить</button>
+                    </div>
+                    
+                    <!-- HSK 3 -->
+                    <div class="level-card locked">
+                        <div class="level-header">
+                            <h3 class="level-title">HSK 3 — Продвинутый</h3>
+                            <span class="level-status locked">Заблокировано</span>
+                        </div>
+                        <div class="progress-container">
+                            <div class="progress-bar-wrapper">
+                                <div class="progress-bar" style="width: 0%"></div>
+                            </div>
+                            <div class="progress-text">0%</div>
+                        </div>
+                        <button class="continue-btn" disabled>Продолжить</button>
+                    </div>
+                </div>
+                
+                <!-- Изображение -->
+                <div class="image-container">
+                    <img src="{% static 'images/background-building.jpg' %}" alt="Традиционное здание" class="background-img">
+                </div>
+            </div>
         </div>
     </div>
-</body>
-</html>
+
+    {% include 'translate-modal.html' %}
+
+{% endblock %}

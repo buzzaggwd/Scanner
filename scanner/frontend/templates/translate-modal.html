@@ -1,0 +1,15 @@
+{% block translate_modal %}
+    <div id="translate-modal" class="translate-modal">
+        <div class="translate-content">
+            <h2>Добавить слово</h2>
+            <textarea id="translate-input" class="translate-input" placeholder="Введите текст для перевода..."></textarea>
+            <div id="translate-result" class="translate-result">
+                <p>Результат перевода появится здесь</p>
+            </div>
+            <div class="translate-buttons">
+                <button class="translate-btn" onclick="translateText()">Перевести</button>
+                <button class="cancel-btn" onclick="closeTranslateModal()">Отмена</button>
+            </div>
+        </div>
+    </div>
+{% endblock %}

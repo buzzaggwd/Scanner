@@ -1,10 +1,12 @@
 from django.shortcuts import render
+from backend.models import Vocabulary
 
 def home(request):
     return render(request, "home.html")
 
 def dictionary(request):
-    return render(request, "dictionary.html")
+    words = Vocabulary.objects.all()
+    return render(request, "dictionary.html", {'words': words})
 
 def word(request):
     return render(request, "word.html")

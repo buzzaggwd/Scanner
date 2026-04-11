@@ -7,20 +7,416 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AR_scanner</title>
     <link href="{% static 'css/main.css' %}" rel="stylesheet">
+    <style>
+        /* Специфические стили для сканера */
+        .scanner-screen {
+            position: relative;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .background-img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+        }
+        
+        .blur {
+            filter: blur(8px);
+        }
+        
+        .scanner-area {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        
+        .scanner-area p {
+            color: white;
+            font-size: 24px;
+            font-weight: 600;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        .scanner-controls {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 20px;
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+        
+        .flash-btn, .pen-btn {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: none;
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .flash-btn:hover, .pen-btn:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+            transform: scale(1.1);
+        }
+        
+        .scan-btn {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: 4px solid white;
+            background-color: var(--primary);
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .scan-btn:hover {
+            background-color: var(--primary-dark);
+            transform: scale(1.1);
+        }
+        
+        /* Модальное окно с результатами */
+        .result-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .result-modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .result-content {
+            background-color: white;
+            border-radius: 24px;
+            padding: 40px;
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        .result-word {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: var(--text-primary);
+        }
+        
+        .result-translation {
+            font-size: 24px;
+            font-weight: 500;
+            margin-bottom: 24px;
+            color: var(--text-secondary);
+        }
+        
+        .result-xp {
+            font-size: 18px;
+            color: var(--primary);
+            margin-bottom: 32px;
+        }
+        
+        .result-btn {
+            padding: 14px 24px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            border: none;
+            border-radius: 16px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .result-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+        }
+        
+        /* Модальное окно для перевода */
+        .translate-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .translate-modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .translate-content {
+            background-color: white;
+            border-radius: 24px;
+            padding: 40px;
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        .translate-content h2 {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 24px;
+            color: var(--text-primary);
+        }
+        
+        .translate-input {
+            width: 100%;
+            padding: 16px;
+            border: 1px solid #ddd;
+            border-radius: 12px;
+            font-size: 16px;
+            margin-bottom: 24px;
+            resize: vertical;
+            min-height: 100px;
+        }
+        
+        .translate-result {
+            margin-bottom: 24px;
+            padding: 16px;
+            background-color: var(--light-gray);
+            border-radius: 12px;
+            min-height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .translate-result p {
+            margin: 0;
+            font-size: 18px;
+            color: var(--text-primary);
+        }
+        
+        .translate-buttons {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+        }
+        
+        .translate-btn, .cancel-btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .translate-btn {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+        }
+        
+        .translate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+        }
+        
+        .cancel-btn {
+            background-color: #f0f0f0;
+            color: var(--text-primary);
+        }
+        
+        .cancel-btn:hover {
+            background-color: #e0e0e0;
+        }
+    </style>
 </head>
 
 <body>
     <!-- Экран «Сканер» -->
-    <div id="scanner-screen" class="screen">
-        <img src="background-cup.jpg" alt="Чашка на столе" class="background-img blur">
+    <div id="scanner-screen" class="screen scanner-screen">
+        <!-- Хедер с логотипом и навигацией -->
+        <header class="header">
+            <div class="header-content">
+                <nav class="top-nav">
+                    <a href="{% url 'home' %}" class="nav-item" data-tooltip="Главная">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                        <span class="nav-text">Главная</span>
+                    </a>
+                    <a href="{% url 'dictionary' %}" class="nav-item" data-tooltip="Словарь">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7V4a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v3"></path><path d="M9 20h6"></path><path d="M12 4v16"></path></svg>
+                        <span class="nav-text">Словарь</span>
+                    </a>
+                    <button class="add-btn" onclick="openTranslateModal()" data-tooltip="Добавить слово">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                    </button>
+                    <a href="{% url 'levels' %}" class="nav-item" data-tooltip="Уровни">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 20V10"></path><path d="M12 20V4"></path><path d="M6 20v-6"></path></svg>
+                        <span class="nav-text">Уровни</span>
+                    </a>
+                    <a href="{% url 'profile' %}" class="nav-item" data-tooltip="Профиль">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                        <span class="nav-text">Профиль</span>
+                    </a>
+                </nav>
+            </div>
+        </header>
+        
+        <img src="{% static 'images/background-cup.jpg' %}" alt="Чашка на столе" class="background-img blur">
         <div class="scanner-area">
             <p>Наведите камеру на иероглиф</p>
         </div>
         <div class="scanner-controls">
             <button class="flash-btn">⚡</button>
-            <button class="scan-btn">Сканировать</button>
+            <button class="scan-btn" onclick="scanObject()">Сканировать</button>
             <button class="pen-btn">✏️</button>
         </div>
     </div>
+    
+    <!-- Модальное окно с результатами -->
+    <div id="result-modal" class="result-modal">
+        <div class="result-content">
+            <div id="result-word" class="result-word"></div>
+            <div id="result-translation" class="result-translation"></div>
+            <div id="result-xp" class="result-xp"></div>
+            <button class="result-btn" onclick="closeModal()">OK</button>
+        </div>
+    </div>
+    
+    <!-- Модальное окно для перевода -->
+    <div id="translate-modal" class="translate-modal">
+        <div class="translate-content">
+            <h2>Добавить слово</h2>
+            <textarea id="translate-input" class="translate-input" placeholder="Введите текст для перевода..."></textarea>
+            <div id="translate-result" class="translate-result">
+                <p>Результат перевода появится здесь</p>
+            </div>
+            <div class="translate-buttons">
+                <button class="translate-btn" onclick="translateText()">Перевести</button>
+                <button class="cancel-btn" onclick="closeTranslateModal()">Отмена</button>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Функция для сканирования объекта
+        function scanObject() {
+            // В реальном приложении здесь будет код для сканирования
+            // Для демонстрации используем пример
+            const scannedWord = "laptop"; // Пример слова, полученного из сканирования
+            
+            // Отправляем запрос на сервер
+            fetch('/backend/api/scan/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    word: scannedWord,
+                    telegram_id: 123456789 // Пример ID пользователя
+                }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    // Отображаем результаты в модальном окне
+                    document.getElementById('result-word').textContent = data.word;
+                    document.getElementById('result-translation').textContent = data.translation;
+                    document.getElementById('result-xp').textContent = `Получено ${data.xp_gained} XP. Общий баланс: ${data.total_xp} XP`;
+                    document.getElementById('result-modal').classList.add('active');
+                } else {
+                    // Обрабатываем ошибку
+                    alert('Ошибка: ' + data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Произошла ошибка при обработке запроса');
+            });
+        }
+        
+        // Функция для закрытия модального окна
+        function closeModal() {
+            document.getElementById('result-modal').classList.remove('active');
+        }
+        
+        // Функция для открытия модального окна перевода
+        function openTranslateModal() {
+            document.getElementById('translate-modal').classList.add('active');
+        }
+        
+        // Функция для закрытия модального окна перевода
+        function closeTranslateModal() {
+            document.getElementById('translate-modal').classList.remove('active');
+        }
+        
+        // Функция для перевода текста
+        function translateText() {
+            const text = document.getElementById('translate-input').value.trim();
+            
+            if (!text) {
+                alert('Пожалуйста, введите текст для перевода');
+                return;
+            }
+            
+            // Отправляем запрос на сервер
+            fetch('/backend/api/translate/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    text: text,
+                    target_lang: 'zh' // Перевод на китайский
+                }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    // Отображаем результат перевода
+                    document.getElementById('translate-result').innerHTML = `
+                        <p><strong>Исходный текст:</strong> ${data.text}</p>
+                        <p><strong>Перевод:</strong> ${data.translation}</p>
+                    `;
+                } else {
+                    // Обрабатываем ошибку
+                    document.getElementById('translate-result').innerHTML = `<p style="color: red;">Ошибка: ${data.message}</p>`;
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                document.getElementById('translate-result').innerHTML = '<p style="color: red;">Произошла ошибка при обработке запроса</p>';
+            });
+        }
+    </script>
 </body>
 </html>
