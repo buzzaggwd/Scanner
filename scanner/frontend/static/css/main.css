@@ -456,6 +456,7 @@ body {
 
 .search-container {
     margin-bottom: 24px;
+    animation: fadeIn 0.8s ease-in-out;
 }
 
 .search-input {
@@ -481,6 +482,7 @@ body {
     margin-bottom: 24px;
     overflow-x: auto;
     padding-bottom: 8px;
+    animation: slideUp 0.6s ease-out 0.1s both;
 }
 
 .category-btn {
@@ -512,6 +514,7 @@ body {
     grid-template-columns: 1fr 1fr;
     gap: 24px;
     margin-top: 32px;
+    animation: slideUp 0.8s ease-out 0.2s both;
 }
 
 .word-list-container {
@@ -793,6 +796,20 @@ body {
     overflow: hidden;
 }
 
+.word-left {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+}
+
+.word-right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 4px;
+}
+
 .word-item::before {
     content: '';
     position: absolute;
@@ -818,7 +835,7 @@ body {
 }
 
 .word-chinese {
-    font-size: 32px;
+    font-size: 36px;
     font-weight: 600;
     color: var(--text-primary);
     transition: var(--transition);
@@ -829,14 +846,46 @@ body {
 }
 
 .word-translation {
-    font-size: 20px;
+    font-size: 24px;
     color: var(--text-secondary);
     font-weight: 500;
     transition: var(--transition);
 }
 
+.word-separator {
+    font-size: 24px;
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
 .word-item:hover .word-translation {
     color: var(--text-primary);
+}
+
+.word-level {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--primary);
+    background-color: var(--primary-light);
+    padding: 4px 12px;
+    border-radius: 12px;
+    transition: var(--transition);
+}
+
+.word-xp {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    transition: var(--transition);
+}
+
+.word-item:hover .word-level {
+    background-color: var(--primary);
+    color: var(--white);
+}
+
+.word-item:hover .word-xp {
+    color: var(--primary);
 }
 
 /* Кнопка */
@@ -1518,6 +1567,12 @@ body {
     padding: 24px;
     max-height: 600px;
     overflow-y: auto;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.word-list-container::-webkit-scrollbar {
+    display: none;
 }
 
 .word-list-title {
@@ -1758,13 +1813,20 @@ body {
     color: var(--text-primary);
     font-size: 14px;
     font-weight: 500;
-    color: var(--white);
-    border-color: var(--primary);
+    transition: var(--transition);
 }
 
 .category-btn:hover {
     transform: translateY(-2px);
     box-shadow: var(--shadow-sm);
+    border-color: var(--primary);
+    color: var(--primary);
+}
+
+.category-btn.active {
+    background-color: var(--primary);
+    color: var(--white);
+    border-color: var(--primary);
 }
 
 .dictionary-content {
@@ -1781,6 +1843,12 @@ body {
     padding: 24px;
     max-height: 600px;
     overflow-y: auto;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.word-list-container::-webkit-scrollbar {
+    display: none;
 }
 
 .word-list-title {
@@ -1991,6 +2059,7 @@ body {
     gap: 32px;
     width: 100%;
     align-items: start;
+    animation: slideUp 0.8s ease-out 0.2s both;
 }
 
 .level-progress {
@@ -2001,6 +2070,7 @@ body {
     display: flex;
     flex-direction: column;
     gap: 24px;
+    animation: fadeIn 0.8s ease-in-out;
 }
 
 .level-card {
@@ -2012,6 +2082,7 @@ body {
     position: relative;
     overflow: hidden;
     transition: var(--transition);
+    animation: slideUp 0.6s ease-out;
 }
 
 .level-card::before {
@@ -2174,6 +2245,7 @@ body {
     text-align: center;
     gap: 24px;
     transition: var(--transition);
+    animation: fadeIn 0.8s ease-in-out;
 }
 
 .profile-card:hover {
@@ -2212,11 +2284,12 @@ body {
 
 .stats-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     gap: 20px;
     width: 100%;
-    max-width: 600px;
+    max-width: 800px;
     margin: 0 auto;
+    animation: slideUp 0.6s ease-out 0.2s both;
 }
 
 .stat-card {
@@ -2257,6 +2330,7 @@ body {
     justify-content: space-between;
     align-items: center;
     box-shadow: var(--shadow-md);
+    animation: slideUp 0.6s ease-out 0.4s both;
 }
 
 .streak-info h3 {
@@ -2283,6 +2357,7 @@ body {
     display: flex;
     flex-direction: column;
     gap: 24px;
+    animation: slideUp 0.6s ease-out 0.6s both;
 }
 
 .settings-title {
