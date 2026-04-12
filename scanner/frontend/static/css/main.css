@@ -293,13 +293,32 @@ body {
     animation: fadeIn 0.3s ease-in-out;
 }
 
-.camera-video {
+.camera-feed-wrapper {
+    position: relative;
     width: 100%;
     height: 400px;
-    object-fit: cover;
     border-radius: 12px;
+    overflow: hidden;
     background: #000;
-    transform: scaleX(-1); /* Отразить изображение горизонтально */
+    margin-bottom: 16px;
+}
+
+.camera-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.camera-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
 }
 
 .camera-controls {
