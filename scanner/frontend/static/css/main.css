@@ -308,7 +308,7 @@ body {
 
     .main-title {
         font-size: 42px;
-        margin: 120px 0 20px;
+        margin: 90px 0 0px;
     }
 
     .challenge-card {
@@ -348,7 +348,7 @@ body {
 .main-title {
     font-size: 48px;
     font-weight: 700;
-    margin: 120px 0 20px;
+    margin: 90px 0 0px;
     color: var(--text-primary);
     text-align: center;
     background: linear-gradient(135deg, var(--primary), var(--secondary));
@@ -368,7 +368,7 @@ body {
     width: 100%;
     max-width: 800px;
     text-align: center;
-    margin: 40px 0;
+    margin: 35px 0;
     animation: slideUp 0.6s ease-out;
     position: relative;
     overflow: hidden;
@@ -479,10 +479,10 @@ body {
 .categories {
     display: flex;
     gap: 12px;
-    margin-bottom: 24px;
+    /* margin-bottom: 24px; */
     overflow-x: auto;
     padding-bottom: 8px;
-    animation: slideUp 0.6s ease-out 0.1s both;
+    animation: slideUp 0.6s ease-out;
 }
 
 .category-btn {
@@ -513,8 +513,8 @@ body {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 24px;
-    margin-top: 32px;
-    animation: slideUp 0.8s ease-out 0.2s both;
+    /* margin-top: 32px; */
+    animation: slideUp 0.8s ease-out;
 }
 
 .word-list-container {
@@ -525,6 +525,7 @@ body {
     max-height: 600px;
     overflow-y: auto;
     transition: var(--transition);
+    animation: slideUp 0.6s ease-out;
 }
 
 .word-list-container:hover {
@@ -605,6 +606,7 @@ body {
     transition: var(--transition);
     position: relative;
     overflow: hidden;
+    animation: slideUp 0.6s ease-out;
 }
 
 .word-details:hover {
@@ -1022,7 +1024,7 @@ body {
     font-size: 32px;
     font-weight: 700;
     color: var(--text-primary);
-    margin-bottom: 32px;
+    /* margin-bottom: 32px; */
     text-align: center;
     animation: slideUp 0.8s ease-out both;
 }
@@ -2051,38 +2053,44 @@ body {
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
+    animation: fadeIn 0.8s ease-in-out;
 }
 
 .levels-content {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 3fr;
     gap: 32px;
     width: 100%;
     align-items: start;
-    animation: slideUp 0.8s ease-out 0.2s both;
 }
 
 .level-progress {
     background-color: var(--white);
     border-radius: 24px;
     box-shadow: var(--shadow-md);
-    padding: 32px;
+    padding: 24px;
     display: flex;
     flex-direction: column;
-    gap: 24px;
-    animation: fadeIn 0.8s ease-in-out;
+    gap: 16px;
+    animation: slideUp 0.6s ease-out;
 }
 
 .level-card {
     background-color: var(--white);
-    border-radius: 24px;
+    border-radius: 20px;
     box-shadow: var(--shadow-md);
-    padding: 24px;
-    margin-bottom: 16px;
+    padding: 20px;
+    margin-bottom: 12px;
     position: relative;
     overflow: hidden;
     transition: var(--transition);
     animation: slideUp 0.6s ease-out;
+    cursor: pointer;
+}
+
+.level-card.active {
+    box-shadow: 0 8px 24px rgba(76, 175, 80, 0.3);
+    border: 2px solid var(--primary);
 }
 
 .level-card::before {
@@ -2117,7 +2125,7 @@ body {
 }
 
 .level-title {
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 600;
     color: var(--text-primary);
 }
@@ -2177,12 +2185,59 @@ body {
     box-shadow: var(--shadow-md);
 }
 
-.image-container {
+.image-container,
+.level-detail {
     position: relative;
     border-radius: 24px;
     overflow: hidden;
     box-shadow: var(--shadow-md);
     height: 400px;
+}
+
+.level-detail {
+    background-color: var(--white);
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    animation: fadeIn 0.8s ease-in-out;
+}
+
+.level-detail h3 {
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 0;
+}
+
+.level-detail p {
+    font-size: 16px;
+    color: var(--text-secondary);
+    margin: 0;
+}
+
+.level-detail ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.level-detail li {
+    font-size: 14px;
+    color: var(--text-secondary);
+    padding-left: 20px;
+    position: relative;
+}
+
+.level-detail li::before {
+    content: '•';
+    color: var(--primary);
+    font-weight: bold;
+    position: absolute;
+    left: 0;
 }
 
 .background-img {
@@ -2232,6 +2287,7 @@ body {
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
+    animation: fadeIn 0.8s ease-in-out;
 }
 
 .profile-card {
@@ -2245,7 +2301,7 @@ body {
     text-align: center;
     gap: 24px;
     transition: var(--transition);
-    animation: fadeIn 0.8s ease-in-out;
+    animation: slideUp 0.6s ease-out;
 }
 
 .profile-card:hover {
@@ -2289,7 +2345,6 @@ body {
     width: 100%;
     max-width: 800px;
     margin: 0 auto;
-    animation: slideUp 0.6s ease-out 0.2s both;
 }
 
 .stat-card {
@@ -2330,7 +2385,7 @@ body {
     justify-content: space-between;
     align-items: center;
     box-shadow: var(--shadow-md);
-    animation: slideUp 0.6s ease-out 0.4s both;
+    animation: slideUp 0.6s ease-out;
 }
 
 .streak-info h3 {
@@ -2357,7 +2412,7 @@ body {
     display: flex;
     flex-direction: column;
     gap: 24px;
-    animation: slideUp 0.6s ease-out 0.6s both;
+    animation: slideUp 0.6s ease-out;
 }
 
 .settings-title {
@@ -2369,10 +2424,11 @@ body {
 
 .setting-item {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: center;
-    padding: 16px 0;
+    padding: 12px 0;
     border-bottom: 1px solid var(--light-gray);
+    gap: 20px;
 }
 
 .setting-item:last-child {
@@ -2382,6 +2438,7 @@ body {
 .setting-label {
     font-size: 16px;
     color: var(--text-primary);
+    flex: 1;
 }
 
 .toggle-switch {
@@ -2493,4 +2550,19 @@ input:checked+.toggle-slider:before {
     .settings-card {
         padding: 24px;
     }
+}
+
+
+#detail-progress-title {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 0 0 10px;
+}
+
+#detail-features-title {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 0 0 10px;
 }

@@ -7,6 +7,89 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Word</title>
     <link href="{% static 'css/main.css' %}" rel="stylesheet">
+    <style>
+        #word-screen {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            animation: fadeIn 0.8s ease-in-out;
+        }
+        
+        #word-screen h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            animation: slideUp 0.6s ease-out;
+        }
+        
+        #word-screen p {
+            font-size: 24px;
+            margin-bottom: 30px;
+            animation: slideUp 0.6s ease-out;
+        }
+        
+        .examples {
+            margin-bottom: 40px;
+            animation: slideUp 0.6s ease-out;
+        }
+        
+        .examples p {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+        
+        .add-btn {
+            padding: 15px 30px;
+            font-size: 24px;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 40px;
+            animation: slideUp 0.6s ease-out;
+        }
+        
+        .bottom-nav {
+            display: flex;
+            gap: 30px;
+            animation: slideUp 0.6s ease-out;
+        }
+        
+        .bottom-nav a {
+            font-size: 24px;
+            text-decoration: none;
+            color: var(--text-primary);
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
 </head>
 
 <body>
