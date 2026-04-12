@@ -1,0 +1,19 @@
+{% load static %}
+
+<div id="camera-modal" class="modal">
+    <div class="modal-content camera-modal-content">
+        <div class="modal-header">
+            <h2 class="modal-title">AR-Сканер</h2>
+            <button class="close-btn" onclick="closeCameraModal()">&times;</button>
+        </div>
+        <div class="modal-body">
+            <div class="camera-container">
+                <video id="camera-video" class="camera-video" autoplay></video>
+                <div class="camera-controls">
+                    <button id="toggle-camera" class="camera-btn">Включить камеру</button>
+                    <button id="capture-btn" class="camera-btn" disabled>Сканировать</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
