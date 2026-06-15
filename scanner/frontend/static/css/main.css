@@ -2874,3 +2874,326 @@ input:checked+.toggle-slider:before {
     color: var(--text-primary);
     padding-left: 15px;
 }
+
+/* ==================== ТЕМЫ ==================== */
+/* Стили для модалки выбора темы */
+.themes-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    padding: 10px 0;
+}
+
+.theme-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    background: var(--light-gray);
+    border-radius: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.theme-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--primary);
+}
+
+.theme-card.active {
+    border-color: var(--primary);
+    background: var(--primary-light);
+}
+
+.theme-preview {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    margin-bottom: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.green-preview {
+    background: linear-gradient(135deg, #4CAF50 0%, #388E3C 100%);
+}
+
+.blue-preview {
+    background: linear-gradient(135deg, #2196F3 0%, #1976D2 100%);
+}
+
+.orange-preview {
+    background: linear-gradient(135deg, #FF9800 0%, #F57C00 100%);
+}
+
+.purple-preview {
+    background: linear-gradient(135deg, #9C27B0 0%, #7B1FA2 100%);
+}
+
+.theme-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.theme-check {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 24px;
+    height: 24px;
+    background: var(--primary);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.theme-card.active .theme-check,
+.theme-card:hover .theme-check {
+    opacity: 1;
+}
+
+/* Цветовые схемы для разных тем */
+/* Синяя тема */
+body.blue-theme {
+    --primary: #2196F3;
+    --primary-light: #E3F2FD;
+    --primary-dark: #1976D2;
+    --secondary: #0d47a1;
+    background: linear-gradient(135deg, #E3F2FD 0%, #BBDEFB 100%);
+}
+
+body.blue-theme .logo svg {
+    color: var(--primary);
+}
+
+body.blue-theme .logo-text {
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+body.blue-theme .green-btn {
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+}
+
+body.blue-theme .green-btn:hover {
+    box-shadow: 0 12px 40px rgba(33, 150, 243, 0.4);
+}
+
+body.blue-theme .add-btn {
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+}
+
+body.blue-theme .add-btn:hover {
+    box-shadow: 0 12px 40px rgba(33, 150, 243, 0.4);
+}
+
+body.blue-theme .translate-btn {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+}
+
+body.blue-theme .translate-btn:hover {
+    box-shadow: 0 4px 12px rgba(33, 150, 243, 0.3);
+}
+
+body.blue-theme .theme-btn {
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+}
+
+body.blue-theme .theme-btn:hover {
+    box-shadow: 0 4px 12px rgba(33, 150, 243, 0.3);
+}
+
+body.blue-theme #toggle-camera {
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+}
+
+body.blue-theme #toggle-camera:hover {
+    box-shadow: 0 4px 12px rgba(33, 150, 243, 0.3);
+}
+
+body.blue-theme .theme-card:hover {
+    border-color: var(--primary);
+}
+
+body.blue-theme .theme-card.active {
+    border-color: var(--primary);
+    background: var(--primary-light);
+}
+
+body.blue-theme .theme-check {
+    background: var(--primary);
+}
+
+/* Оранжевая тема */
+body.orange-theme {
+    --primary: #FF9800;
+    --primary-light: #FFF3E0;
+    --primary-dark: #F57C00;
+    --secondary: #e65100;
+    background: linear-gradient(135deg, #FFF3E0 0%, #FFE0B2 100%);
+}
+
+body.orange-theme .logo svg {
+    color: var(--primary);
+}
+
+body.orange-theme .logo-text {
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+body.orange-theme .green-btn {
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+}
+
+body.orange-theme .green-btn:hover {
+    box-shadow: 0 12px 40px rgba(255, 152, 0, 0.4);
+}
+
+body.orange-theme .add-btn {
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+}
+
+body.orange-theme .add-btn:hover {
+    box-shadow: 0 12px 40px rgba(255, 152, 0, 0.4);
+}
+
+body.orange-theme .translate-btn {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+}
+
+body.orange-theme .translate-btn:hover {
+    box-shadow: 0 4px 12px rgba(255, 152, 0, 0.3);
+}
+
+body.orange-theme .theme-btn {
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+}
+
+body.orange-theme .theme-btn:hover {
+    box-shadow: 0 4px 12px rgba(255, 152, 0, 0.3);
+}
+
+body.orange-theme #toggle-camera {
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+}
+
+body.orange-theme #toggle-camera:hover {
+    box-shadow: 0 4px 12px rgba(255, 152, 0, 0.3);
+}
+
+body.orange-theme .theme-card:hover {
+    border-color: var(--primary);
+}
+
+body.orange-theme .theme-card.active {
+    border-color: var(--primary);
+    background: var(--primary-light);
+}
+
+body.orange-theme .theme-check {
+    background: var(--primary);
+}
+
+/* Фиолетовая тема */
+body.purple-theme {
+    --primary: #9C27B0;
+    --primary-light: #F3E5F5;
+    --primary-dark: #7B1FA2;
+    --secondary: #4a148c;
+    background: linear-gradient(135deg, #F3E5F5 0%, #E1BEE7 100%);
+}
+
+body.purple-theme .logo svg {
+    color: var(--primary);
+}
+
+body.purple-theme .logo-text {
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+body.purple-theme .green-btn {
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+}
+
+body.purple-theme .green-btn:hover {
+    box-shadow: 0 12px 40px rgba(156, 39, 176, 0.4);
+}
+
+body.purple-theme .add-btn {
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+}
+
+body.purple-theme .add-btn:hover {
+    box-shadow: 0 12px 40px rgba(156, 39, 176, 0.4);
+}
+
+body.purple-theme .translate-btn {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+}
+
+body.purple-theme .translate-btn:hover {
+    box-shadow: 0 4px 12px rgba(156, 39, 176, 0.3);
+}
+
+body.purple-theme .theme-btn {
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+}
+
+body.purple-theme .theme-btn:hover {
+    box-shadow: 0 4px 12px rgba(156, 39, 176, 0.3);
+}
+
+body.purple-theme #toggle-camera {
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+}
+
+body.purple-theme #toggle-camera:hover {
+    box-shadow: 0 4px 12px rgba(156, 39, 176, 0.3);
+}
+
+body.purple-theme .theme-card:hover {
+    border-color: var(--primary);
+}
+
+body.purple-theme .theme-card.active {
+    border-color: var(--primary);
+    background: var(--primary-light);
+}
+
+body.purple-theme .theme-check {
+    background: var(--primary);
+}
+
+/* Адаптивные стили для тем */
+@media (max-width: 480px) {
+    .themes-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+    }
+
+    .theme-card {
+        padding: 16px;
+    }
+
+    .theme-preview {
+        width: 50px;
+        height: 50px;
+    }
+
+    .theme-name {
+        font-size: 12px;
+    }
+}

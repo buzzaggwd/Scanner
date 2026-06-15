@@ -1,0 +1,41 @@
+{% load static %}
+
+<div id="themes-modal" class="modal">
+    <div class="modal-content themes-modal-content">
+        <div class="modal-header">
+            <h2 class="modal-title">Выбрать тему</h2>
+            <button class="close-btn" onclick="closeThemesModal()">&times;</button>
+        </div>
+        <div class="modal-body">
+            <div class="themes-grid">
+                <!-- Зеленая тема (по умолчанию) -->
+                <div class="theme-card" data-theme="green" onclick="applyTheme('green')">
+                    <div class="theme-preview green-preview"></div>
+                    <span class="theme-name">Зеленая</span>
+                    <span class="theme-check" id="green-check">✓</span>
+                </div>
+                
+                <!-- Синяя тема -->
+                <div class="theme-card" data-theme="blue" onclick="applyTheme('blue')">
+                    <div class="theme-preview blue-preview"></div>
+                    <span class="theme-name">Синяя</span>
+                    <span class="theme-check" id="blue-check"></span>
+                </div>
+                
+                <!-- Оранжевая тема -->
+                <div class="theme-card" data-theme="orange" onclick="applyTheme('orange')">
+                    <div class="theme-preview orange-preview"></div>
+                    <span class="theme-name">Оранжевая</span>
+                    <span class="theme-check" id="orange-check"></span>
+                </div>
+                
+                <!-- Фиолетовая тема -->
+                <div class="theme-card" data-theme="purple" onclick="applyTheme('purple')">
+                    <div class="theme-preview purple-preview"></div>
+                    <span class="theme-name">Фиолетовая</span>
+                    <span class="theme-check" id="purple-check"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
