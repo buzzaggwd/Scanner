@@ -27,7 +27,7 @@
                 <div class="word-list-container">
                     <h2 class="word-list-title">Слова</h2>
                     {% for word in words %}
-                    <div class="dictionary-word-item {% if forloop.first %}active{% endif %}">
+                    <div class="dictionary-word-item {% if forloop.first %}active{% endif %}" onclick="openWordDetails()">
                         <div class="word-info">
                             <span class="word-chinese">{{ word.word }}</span>
                             <span class="word-translation">{{ word.translation }}</span>
@@ -39,7 +39,8 @@
                 </div>
 
                 <!-- Детали слова -->
-                <div class="word-details">
+                <div id="word-details-modal" class="word-details">
+                    <button class="close-word-details" onclick="closeWordDetails()">&times;</button>
                     <div class="detail-chinese">桌子</div>
                     <div class="detail-pinyin">
                         <span>zhuōzi</span>
@@ -70,5 +71,47 @@
 
     {% include 'translate-modal.html' %}
     {% include 'camera-modal.html' %}
+
+    <script>
+                    // Настраиваем отображение окна при загрузке
+                    document.addEventListener('DOMContentLoaded', function() {
+                        const modal = document.getElementById('word-details-modal');
+                        console.log('DOM загружен, ширина экрана:', window.innerWidth);
+                        console.log('Модальное окно найдено:', modal !== null);
+                        if (modal) {
+                            modal.classList.remove('show');
+                            // На десктопе (>768px) показываем окно как карточка
+                            if (window.innerWidth > 768) {
+                                modal.style.display = 'flex';
+                                console.log('Режим десктопа: окно показывается как карточка');
+                            } else {
+                                // На мобильных CSS уже скрывает окно
+                                console.log('Режим мобильный: окно скрыто CSS');
+                            }
+                        }
+                    });
+
+                    function openWordDetails() {
+                        const modal = document.getElementById('word-details-modal');
+                        if (modal) {
+                            modal.classList.add('show');
+                            // На десктопе ничего дополнительного не нужно
+                        }
+                    }
+
+                    function closeWordDetails() {
+                        const modal = document.getElementById('word-details-modal');
+                        if (modal) {
+                            modal.classList.remove('show');
+                        }
+                    }
+
+                    // Закрытие по клику на фон
+                    document.getElementById('word-details-modal').addEventListener('click', function(event) {
+                        if (event.target === this) {
+                            closeWordDetails();
+                        }
+                    });
+                </script>
 
 {% endblock %}
