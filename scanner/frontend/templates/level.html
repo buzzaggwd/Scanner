@@ -35,15 +35,14 @@
         <h2 style="margin: 20px 0 16px 0;">Уроки</h2>
         <div class="lessons-container">
             {% for lesson in lessons %}
-            <div class="lesson-card{% if lesson.status == 'completed' %} completed{% endif %}" {% if lesson.status
-                !='locked' %}onclick="startLesson({{ lesson.id }})" {% endif %}>
+            <div class="lesson-card{% if lesson.status == 'completed' %} completed{% endif %}" {% if lesson.status != 'locked' %} onclick="startLesson({{ lesson.id }})" {% endif %}>
                 <div class="lesson-icon">{{ lesson.number }}</div>
                 <div class="lesson-info">
                     <h3>{{ lesson.title }}</h3>
                     <p>{{ lesson.description }}</p>
                 </div>
                 <div class="lesson-status {{ lesson.status }}">
-                    {% if lesson.status == 'completed' %}✓{% elif lesson.status == 'locked' %}🔒{% else %}▶{% endif %}
+                    {% if lesson.status == 'completed' %}✓{% elif lesson.status == 'locked' %} 🔒{% else %} ▶{% endif %}
                 </div>
             </div>
             {% endfor %}
