@@ -6,6 +6,37 @@ from django.views.decorators.csrf import csrf_exempt
 import json
 
 @csrf_exempt
+def get_word_details(request, word_id):
+    if request.method == 'GET':
+        try:
+            word = Vocabulary.objects.get(id=word_id)
+            
+            # Парсим примеры (они хранятся через ;)
+            examples = []
+            if word.example_sentences:
+                example_pairs = word.example_sentences.split(';')
+                for pair in example_pairs:
+                    parts = pair.split('|')
+                    if len(parts) >= 2:
+                        examples.append({
+                            'chinese': parts[0].strip(),
+                            'translation': parts[1].strip()
+                        })
+            
+            return JsonResponse({
+                'status': 'success',
+                'id': word.id,
+                'word': word.word,
+                'translation_cn': word.translation_cn,
+                'transcription': word.transcription,
+                'translation_eng': word.translation_eng,
+                'audio_url': word.audio_url,
+                'examples': examples
+            })
+        except Vocabulary.DoesNotExist:
+            return JsonResponse({'status': 'error', 'message': 'Word not found'}, status=404)
+
+@csrf_exempt
 def process_scan(request):
     if request.method == 'POST':
         data = json.loads(request.body)

@@ -16,12 +16,20 @@
     <link rel="stylesheet" href="{% static 'css/main.css' %}">
     <link rel="stylesheet" href="{% static 'css/scanner.css' %}">
     <link rel="stylesheet" href="{% static 'css/level.css' %}">
+
+    {% if words_json %}
+    <script>
+        window.wordsData = {{ words_json|safe }};
+    </script>
+    {% endif %}
+
     <script src="{% static 'js/home.js' %}"></script>
     <script src="{% static 'js/levels.js' %}?v=2"></script>
     <script src="{% static 'js/camera.js' %}"></script>
     <script src="{% static 'js/themes.js' %}"></script>
     <script src="{% static 'js/scan_object.js' %}"></script>
     <script src="{% static 'js/dictionary.js' %}"></script>
+    <script src="{% static 'js/word.js' %}"></script>
     <script src="{% static 'js/level.js' %}?v=2"></script>
 </head>
 

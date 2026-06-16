@@ -11,32 +11,43 @@ function closeThemesModal() {
 // Функция для применения выбранной темы
 function applyTheme(themeName) {
     const body = document.body;
-    
+
     // Удаляем все классы тем
     body.classList.remove('blue-theme', 'orange-theme', 'purple-theme', 'green-theme');
-    
+
     // Добавляем выбранную тему
     if (themeName !== 'green') {
         body.classList.add(themeName + '-theme');
     }
-    
+
     // Обновляем активные карточки тем
-    document.querySelectorAll('.theme-card').forEach(card => {
+    const themeCards = document.querySelectorAll('.theme-card');
+    themeCards.forEach(card => {
         card.classList.remove('active');
     });
-    document.querySelector(`[data-theme="${themeName}"]`).classList.add('active');
-    
+    const activeCard = document.querySelector(`[data-theme="${themeName}"]`);
+    if (activeCard) {
+        activeCard.classList.add('active');
+    }
+
     // Обновляем индикаторы выбора
-    document.querySelectorAll('.theme-check').forEach(check => {
+    const themeChecks = document.querySelectorAll('.theme-check');
+    themeChecks.forEach(check => {
         check.textContent = '';
     });
-    document.getElementById(`${themeName}-check`).textContent = '✓';
-    
+    const activeCheck = document.getElementById(`${themeName}-check`);
+    if (activeCheck) {
+        activeCheck.textContent = '✓';
+    }
+
     // Сохраняем тему в localStorage
     localStorage.setItem('selectedTheme', themeName);
-    
+
     // Закрываем модалку
-    closeThemesModal();
+    const themesModal = document.getElementById('themes-modal');
+    if (themesModal) {
+        themesModal.classList.remove('active');
+    }
 }
 
 // Инициализация темы при загрузке страницы

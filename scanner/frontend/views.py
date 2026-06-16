@@ -1,12 +1,47 @@
 from django.shortcuts import render
+from django.http import JsonResponse
 from backend.models import Vocabulary
+import json
 
 def home(request):
     return render(request, "home.html", {'active_page': 'home'})
 
 def dictionary(request):
     words = Vocabulary.objects.all()
-    return render(request, "dictionary.html", {'words': words, 'active_page': 'dictionary'})
+    
+    # Подготовка данных слов для JavaScript
+    words_data = []
+    for word in words:
+        # Парсинг примеров из поля example_sentences
+        # Формат: китайский1;перевод1;китайский2;перевод2;...
+        examples = []
+        if word.example_sentences:
+            example_list = word.example_sentences.split(';')
+            for i in range(0, len(example_list), 2):
+                if i + 1 < len(example_list):
+                    chinese = example_list[i].strip()
+                    translation = example_list[i + 1].strip()
+                    if chinese and translation:
+                        examples.append({
+                            'chinese': chinese,
+                            'translation': translation
+                        })
+        
+        words_data.append({
+            'id': word.id,
+            'word': word.word,
+            'transcription': word.transcription,
+            'translation_eng': word.translation_eng,
+            'translation_cn': word.translation_cn,
+            'audio_url': word.audio_url,
+            'examples': examples
+        })
+    
+    return render(request, "dictionary.html", {
+        'words': words,
+        'words_json': json.dumps(words_data),
+        'active_page': 'dictionary'
+    })
 
 def levels(request):
     return render(request, "levels.html", {'active_page': 'levels'})
