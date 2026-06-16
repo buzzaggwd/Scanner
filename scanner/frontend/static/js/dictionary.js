@@ -4,14 +4,14 @@ document.addEventListener("DOMContentLoaded", function () {
     console.log("DOM загружен, ширина экрана:", window.innerWidth);
     console.log("Модальное окно найдено:", modal !== null);
     if (modal) {
-        modal.classList.remove("show");
-        // На десктопе (>768px) показываем окно как карточка
+        // На десктопе (>768px) показываем окно сразу
         if (window.innerWidth > 768) {
-            modal.style.display = "flex";
-            console.log("Режим десктопа: окно показывается как карточка");
+            modal.classList.add("show");
+            console.log("Режим десктопа: окно показывается");
         } else {
-            // На мобильных CSS уже скрывает окно
-            console.log("Режим мобильный: окно скрыто CSS");
+            // На мобильных скрываем по умолчанию
+            modal.classList.remove("show");
+            console.log("Режим мобильный: окно скрыто");
         }
     }
 });
@@ -25,11 +25,16 @@ function openWordDetails() {
 }
 
 function closeWordDetails() {
+    console.log("closeWordDetails вызывается");
     const modal = document.getElementById("word-details-modal");
     if (modal) {
+        console.log("Модальное окно найдено, удаляем класс show");
         modal.classList.remove("show");
     }
 }
+
+// Сделаем функцию доступной глобально
+window.closeWordDetails = closeWordDetails;
 
 // Закрытие по клику на фон
 document.addEventListener("DOMContentLoaded", function () {
@@ -41,6 +46,29 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
     }
+
+    // Закрытие по клику на кнопку закрытия
+    const closeBtn = document.querySelector(".close-word-details");
+    if (closeBtn) {
+        closeBtn.addEventListener("click", function (event) {
+            event.stopPropagation();
+            console.log("Кнопка закрытия нажата!");
+            closeWordDetails();
+        });
+        console.log("Обработчик клика на кнопку закрытия добавлен");
+    } else {
+        console.log("Кнопка закрытия не найдена!");
+    }
+
+    // Делегирование событий - обработчик на весь документ
+    document.addEventListener("click", function(event) {
+        if (event.target.classList.contains("close-word-details") || 
+            event.target.closest(".close-word-details")) {
+            console.log("Делегированный обработчик: кнопка закрытия нажата!");
+            event.stopPropagation();
+            closeWordDetails();
+        }
+    });
 });
 
 // Данные всех слов из базы (получаем из глобальной переменной)
@@ -71,6 +99,9 @@ function showWordDetails(wordId) {
     if (detailChinese) detailChinese.textContent = word.translation_cn;
     if (detailTranscription) detailTranscription.textContent = word.transcription;
     if (detailTranslation) detailTranslation.textContent = word.word;
+
+    // Показываем модальное окно
+    openWordDetails();
 
     // Очистка и отображение примеров
     const examplesContainer = document.getElementById('detail-examples');
@@ -107,8 +138,11 @@ document.addEventListener('DOMContentLoaded', function () {
             console.log('Клик по слову, ID:', wordId);
             showWordDetails(wordId);
 
-            // Показываем модальное окно
-            document.getElementById('word-details-modal').style.display = 'block';
+            // Показываем модальное окно (используем класс show)
+            const modal = document.getElementById('word-details-modal');
+            if (modal) {
+                modal.classList.add('show');
+            }
         });
     });
 
@@ -117,7 +151,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const firstWordId = parseInt(wordItems[0].getAttribute('data-word-id'));
         console.log('Автоматическое отображение первого слова, ID:', firstWordId);
         showWordDetails(firstWordId);
-        document.getElementById('word-details-modal').style.display = 'block';
+        // На десктопе уже показано, на мобильном не показываем
     } else {
         console.error('Нет элементов слов на странице!');
     }

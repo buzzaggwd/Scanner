@@ -41,7 +41,7 @@
 
             <!-- Детали слова -->
             <div id="word-details-modal" class="word-details">
-                <button class="close-word-details" onclick="closeWordDetails()">&times;</button>
+                <button class="close-word-details" id="mobile-close-btn" onclick="(function(){console.log('Кнопка нажата!'); document.getElementById('word-details-modal').classList.remove('show');})();">&times;</button>
                 <div class="detail-chinese" id="detail-chinese"></div>
                 <div class="detail-pinyin" id="detail-pinyin">
                     <span id="detail-transcription"></span>
