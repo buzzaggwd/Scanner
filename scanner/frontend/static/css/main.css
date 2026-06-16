@@ -328,6 +328,10 @@ body {
     justify-content: center;
 }
 
+.camera-container {
+    position: relative;
+}
+
 .camera-btn {
     padding: 12px 24px;
     border: none;
@@ -345,17 +349,38 @@ body {
 }
 
 #toggle-camera {
+    display: none; /* Скрываем на десктопе */
     background: linear-gradient(135deg, var(--primary), var(--primary-dark));
     color: white;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    padding: 0;
+    flex: none;
+    position: absolute;
+    left: 16px;
+    bottom: 16px;
 }
 
 #toggle-camera:hover {
-    transform: translateY(-2px);
+    transform: scale(1.1);
     box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
 }
 
 /* Адаптивные стили для камеры и модалки на мобильных устройствах */
 @media (max-width: 768px) {
+    #toggle-camera {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 44px;
+        height: 44px;
+        left: 12px;
+        bottom: 12px;
+    }
+    .camera-controls {
+        justify-content: center;
+    }
     .modal-content {
         width: 95%;
         max-width: 95%;
