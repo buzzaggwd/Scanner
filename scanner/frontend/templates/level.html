@@ -1,17 +1,57 @@
+{% extends 'base.html' %}
 {% load static %}
 
-<!DOCTYPE html>
-<html lang="ru">
+{% block title %}HSK {{ level_number }} — {{ level_name }}{% endblock %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Level</title>
-    <link href="{% static 'css/main.css' %}" rel="stylesheet">
-</head>
+{% block content %}
+<div id="level-screen" class="screen level-screen">
+    <!-- Хедер с кнопкой назад -->
+    <div class="level-header">
+        <button class="back-btn" onclick="goBack()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M19 12H5"></path>
+                <polyline points="12 19 5 12 12 5"></polyline>
+            </svg>
+        </button>
+        <div class="level-title-section">
+            <h1>HSK {{ level_number }} — {{ level_name }}</h1>
+            <p>Обучение китайскому языку</p>
+        </div>
+    </div>
 
-<body>
+    <!-- Основное содержимое -->
+    <div class="level-content">
+        <!-- Прогресс уровня -->
+        <div class="level-progress-header">
+            <h2>Прогресс уровня</h2>
+            <span class="progress-text">{{ progress }}%</span>
+        </div>
+        <div class="progress-bar-wrapper">
+            <div class="progress-bar" style="width: {{ progress }}%;"></div>
+        </div>
 
-</body>
+        <!-- Список уроков -->
+        <h2 style="margin: 20px 0 16px 0;">Уроки</h2>
+        <div class="lessons-container">
+            {% for lesson in lessons %}
+            <div class="lesson-card{% if lesson.status == 'completed' %} completed{% endif %}" {% if lesson.status
+                !='locked' %}onclick="startLesson({{ lesson.id }})" {% endif %}>
+                <div class="lesson-icon">{{ lesson.number }}</div>
+                <div class="lesson-info">
+                    <h3>{{ lesson.title }}</h3>
+                    <p>{{ lesson.description }}</p>
+                </div>
+                <div class="lesson-status {{ lesson.status }}">
+                    {% if lesson.status == 'completed' %}✓{% elif lesson.status == 'locked' %}🔒{% else %}▶{% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
 
-</html>
+{% include 'translate-modal.html' %}
+{% include 'camera-modal.html' %}
+
+{% endblock %}

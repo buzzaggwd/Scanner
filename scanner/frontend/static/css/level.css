@@ -1,0 +1,186 @@
+/* Стили для страницы конкретного уровня */
+.level-screen {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    animation: fadeIn 0.8s ease-in-out;
+}
+
+.level-header {
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    gap: 20px;
+    background-color: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.back-btn {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: none;
+    background-color: var(--light-gray);
+    color: var(--text-primary);
+    font-size: 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.back-btn:hover {
+    background-color: var(--primary);
+    color: white;
+    transform: scale(1.1);
+}
+
+.level-title-section {
+    flex: 1;
+}
+
+.level-title-section h1 {
+    margin: 0;
+    font-size: 24px;
+    color: var(--text-primary);
+}
+
+.level-title-section p {
+    margin: 5px 0 0 0;
+    font-size: 14px;
+    color: var(--text-secondary);
+}
+
+.level-content {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+.level-progress-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.level-progress-header h2 {
+    font-size: 18px;
+    color: var(--text-primary);
+}
+
+.level-progress-header .progress-text {
+    font-size: 16px;
+    color: var(--primary);
+    font-weight: 600;
+}
+
+.progress-bar-wrapper {
+    width: 100%;
+    height: 12px;
+    background-color: var(--light-gray);
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+
+.progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, var(--primary) 0%, var(--primary-dark) 100%);
+    border-radius: 6px;
+    transition: width 0.5s ease;
+}
+
+.lessons-container {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.lesson-card {
+    background-color: white;
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.lesson-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+}
+
+.lesson-card.completed {
+    opacity: 0.7;
+}
+
+.lesson-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.lesson-info {
+    flex: 1;
+}
+
+.lesson-info h3 {
+    margin: 0 0 5px 0;
+    font-size: 18px;
+    color: var(--text-primary);
+}
+
+.lesson-info p {
+    margin: 0;
+    font-size: 14px;
+    color: var(--text-secondary);
+}
+
+.lesson-status {
+    font-size: 20px;
+}
+
+.lesson-status.completed {
+    color: var(--primary);
+}
+
+.lesson-status.locked {
+    color: #ccc;
+}
+
+.lesson-status.current {
+    color: #f5a623;
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.5;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

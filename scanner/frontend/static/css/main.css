@@ -2490,6 +2490,7 @@ body {
 }
 
 .continue-btn {
+    display: block;
     width: 100%;
     padding: 14px 24px;
     background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
@@ -2501,6 +2502,8 @@ body {
     cursor: pointer;
     transition: var(--transition);
     box-shadow: var(--shadow-sm);
+    text-align: center;
+    text-decoration: none;
 }
 
 .continue-btn:hover {

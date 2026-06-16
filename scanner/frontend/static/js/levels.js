@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', function () {
         'HSK 1': {
             title: 'HSK 1 — Базовый',
             description: 'Базовый уровень китайского языка, включающий основные слова и грамматику.',
-            progress: 65,
+            progress: 25,
             features: [
                 '150 базовых слов',
                 'Основные грамматические конструкции',
