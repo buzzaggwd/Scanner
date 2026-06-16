@@ -1,4 +1,5 @@
 from django.db import models
+from torch import default_generator
 
 class User(models.Model):
     id = models.AutoField(primary_key=True)
@@ -16,9 +17,11 @@ class Vocabulary(models.Model):
     id = models.AutoField(primary_key=True)
     word = models.CharField(max_length=255)
     transcription = models.CharField(max_length=255)
-    translation = models.CharField(max_length=255)
+    translation_eng = models.CharField(max_length=255)
+    translation_cn = models.CharField(max_length=255)
     audio_url = models.CharField(max_length=255)
-    example_sentences = models.TextField(blank=True, null=True)
+    example_sentences = models.TextField(blank=True, null=True) # Будем через ; записывать примеры
+    status = models.CharField(max_length=255)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

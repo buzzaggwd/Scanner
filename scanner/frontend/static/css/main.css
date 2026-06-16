@@ -755,7 +755,7 @@ body {
     display: flex;
     gap: 12px;
     /* margin-bottom: 24px; */
-    overflow-x: auto;
+    /* overflow-x: auto; */
     padding-bottom: 8px;
     animation: slideUp 0.6s ease-out;
 }
@@ -887,6 +887,12 @@ body {
     text-align: center;
 }
 
+@media (max-width: 768px) {
+    .word-details {
+        border-radius: 0;
+    }
+}
+
 .word-details:hover {
     box-shadow: var(--shadow-lg);
 }
@@ -931,6 +937,7 @@ body {
 .detail-pinyin {
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 12px;
     font-size: 18px;
     color: var(--text-secondary);
@@ -2234,7 +2241,7 @@ body {
 
 .word-details {
     background-color: var(--white);
-    border-radius: 24px;
+    border-radius: px;
     box-shadow: var(--shadow-md);
     padding: 32px;
     display: flex;
