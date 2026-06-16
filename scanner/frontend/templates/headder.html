@@ -4,7 +4,8 @@
 <header class="header">
     <div class="header-content">
         <nav class="top-nav">
-            <a href="{% url 'home' %}" class="nav-item {% if active_page == 'home' %}active{% endif %}" data-tooltip="Главная">
+            <a href="{% url 'home' %}" class="nav-item {% if active_page == 'home' %}active{% endif %}"
+                data-tooltip="Главная">
                 <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none"
                     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
@@ -12,7 +13,8 @@
                 </svg>
                 <span class="nav-text">Главная</span>
             </a>
-            <a href="{% url 'dictionary' %}" class="nav-item {% if active_page == 'dictionary' %}active{% endif %}" data-tooltip="Словарь">
+            <a href="{% url 'dictionary' %}" class="nav-item {% if active_page == 'dictionary' %}active{% endif %}"
+                data-tooltip="Словарь">
                 <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none"
                     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M4 7V4a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v3"></path>
@@ -37,7 +39,8 @@
                     <line x1="5" y1="12" x2="19" y2="12"></line>
                 </svg>
             </a>
-            <a href="{% url 'levels' %}" class="nav-item {% if active_page == 'levels' %}active{% endif %}" data-tooltip="Уровни">
+            <a href="{% url 'levels' %}" class="nav-item {% if active_page == 'levels' %}active{% endif %}"
+                data-tooltip="Уровни">
                 <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none"
                     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M18 20V10"></path>
@@ -46,7 +49,8 @@
                 </svg>
                 <span class="nav-text">Уровни</span>
             </a>
-            <a href="{% url 'profile' %}" class="nav-item {% if active_page == 'profile' %}active{% endif %}" data-tooltip="Профиль">
+            <a href="{% url 'profile' %}" class="nav-item {% if active_page == 'profile' %}active{% endif %}"
+                data-tooltip="Профиль">
                 <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none"
                     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>

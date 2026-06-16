@@ -4,82 +4,82 @@
 {% block title %}Профиль{% endblock %}
 
 {% block content %}
-    <div id="profile-screen" class="screen active">
+<div id="profile-screen" class="screen active">
 
-        {% include 'headder.html' %}
+    {% include 'headder.html' %}
 
-        <div class="profile-container">
-            <!-- Карточка профиля -->
-            <div class="profile-card">
-                <div class="avatar-container">
-                    <img src="{% static 'images/fotka4.png' %}" alt="Аватар" class="avatar">
-                </div>
-                <div class="profile-info">
-                    <h2>Майя</h2>
-                    <p>Пользователь в Китае</p>
-                </div>
-
-                <!-- Статистика -->
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <div class="stat-value">217</div>
-                        <div class="stat-label">Слов собрано</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-value">18</div>
-                        <div class="stat-label">Сегодня</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-value">3</div>
-                        <div class="stat-label">Дней стрик</div>
-                    </div>
-                    <div class="stat-card">
-                        {% if experience_points %}
-                        <div class="stat-value">{{ experience_points }}</div>
-                        {% else %}
-                        <div class="stat-value">0</div>
-                        {% endif %}
-                        <div class="stat-label">Общий XP</div>
-                    </div>
-                </div>
+    <div class="profile-container">
+        <!-- Карточка профиля -->
+        <div class="profile-card">
+            <div class="avatar-container">
+                <img src="{% static 'images/fotka4.png' %}" alt="Аватар" class="avatar">
+            </div>
+            <div class="profile-info">
+                <h2>Майя</h2>
+                <p>Пользователь в Китае</p>
             </div>
 
-            <!-- Стрик -->
-            <div class="streak-card">
-                <div class="streak-info">
-                    <h3>3-дневный стрик</h3>
-                    <p>Продолжайте изучать слова каждый день!</p>
+            <!-- Статистика -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-value">217</div>
+                    <div class="stat-label">Слов собрано</div>
                 </div>
-                <div class="streak-icon">🔥</div>
+                <div class="stat-card">
+                    <div class="stat-value">18</div>
+                    <div class="stat-label">Сегодня</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">3</div>
+                    <div class="stat-label">Дней стрик</div>
+                </div>
+                <div class="stat-card">
+                    {% if experience_points %}
+                    <div class="stat-value">{{ experience_points }}</div>
+                    {% else %}
+                    <div class="stat-value">0</div>
+                    {% endif %}
+                    <div class="stat-label">Общий XP</div>
+                </div>
             </div>
+        </div>
 
-            <!-- Настройки -->
-            <div class="settings-card">
-                <h3 class="settings-title">Настройки</h3>
-                <!-- <div class="setting-item">
+        <!-- Стрик -->
+        <div class="streak-card">
+            <div class="streak-info">
+                <h3>3-дневный стрик</h3>
+                <p>Продолжайте изучать слова каждый день!</p>
+            </div>
+            <div class="streak-icon">🔥</div>
+        </div>
+
+        <!-- Настройки -->
+        <div class="settings-card">
+            <h3 class="settings-title">Настройки</h3>
+            <!-- <div class="setting-item">
                     <span class="setting-label">Уведомления</span>
                     <label class="toggle-switch">
                         <input type="checkbox" checked>
                         <span class="toggle-slider"></span>
                     </label>
                 </div> -->
-                <div class="setting-item">
-                    <span class="setting-label">Темная тема</span>
-                    <label class="toggle-switch">
-                        <input type="checkbox">
-                        <span class="toggle-slider"></span>
-                    </label>
-                </div>
-                <div class="setting-item">
-                    <span class="setting-label">Сменить тему</span>
-                    <button class="theme-btn">Выбрать</button>
-                </div>
+            <div class="setting-item">
+                <span class="setting-label">Темная тема</span>
+                <label class="toggle-switch">
+                    <input type="checkbox">
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+            <div class="setting-item">
+                <span class="setting-label">Сменить тему</span>
+                <button class="theme-btn">Выбрать</button>
             </div>
         </div>
     </div>
+</div>
 
-    {% include 'translate-modal.html' %}
-    {% include 'camera-modal.html' %}
-    {% include 'themes-modal.html' %}
+{% include 'translate-modal.html' %}
+{% include 'camera-modal.html' %}
+{% include 'themes-modal.html' %}
 
 {% endblock %}

@@ -4,92 +4,93 @@
 {% block title %}Уровни{% endblock %}
 
 {% block content %}
-    <div id="levels-screen" class="screen active">
+<div id="levels-screen" class="screen active">
 
-        {% include 'headder.html' %}
-        
-        <div class="levels-container">
-            <div class="levels-content">
-                <!-- Список уровней -->
-                <div class="level-progress">
-                    <!-- HSK 1 -->
-                    <div class="level-card">
-                        <div class="level-header">
-                            <h3 class="level-title">HSK 1 — Базовый</h3>
-                            <span class="level-status">Доступен</span>
-                        </div>
-                        <div class="progress-container">
-                            <div class="progress-bar-wrapper">
-                                <div class="progress-bar" style="width: 65%"></div>
-                            </div>
-                            <div class="progress-text">65%</div>
-                        </div>
-                        <button class="continue-btn">Продолжить</button>
+    {% include 'headder.html' %}
+
+    <div class="levels-container">
+        <div class="levels-content">
+            <!-- Список уровней -->
+            <div class="level-progress">
+                <!-- HSK 1 -->
+                <div class="level-card">
+                    <div class="level-header">
+                        <h3 class="level-title">HSK 1 — Базовый</h3>
+                        <span class="level-status">Доступен</span>
                     </div>
-                    
-                    <!-- HSK 2 -->
-                    <div class="level-card locked">
-                        <div class="level-header">
-                            <h3 class="level-title">HSK 2 — Средний</h3>
-                            <span class="level-status locked">Заблокировано</span>
+                    <div class="progress-container">
+                        <div class="progress-bar-wrapper">
+                            <div class="progress-bar" style="width: 65%"></div>
                         </div>
-                        <div class="progress-container">
-                            <div class="progress-bar-wrapper">
-                                <div class="progress-bar" style="width: 0%"></div>
-                            </div>
-                            <div class="progress-text">0%</div>
-                        </div>
-                        <button class="continue-btn" disabled>Продолжить</button>
+                        <div class="progress-text">65%</div>
                     </div>
-                    
-                    <!-- HSK 3 -->
-                    <div class="level-card locked">
-                        <div class="level-header">
-                            <h3 class="level-title">HSK 3 — Продвинутый</h3>
-                            <span class="level-status locked">Заблокировано</span>
+                    <button class="continue-btn">Продолжить</button>
+                </div>
+
+                <!-- HSK 2 -->
+                <div class="level-card locked">
+                    <div class="level-header">
+                        <h3 class="level-title">HSK 2 — Средний</h3>
+                        <span class="level-status locked">Заблокировано</span>
+                    </div>
+                    <div class="progress-container">
+                        <div class="progress-bar-wrapper">
+                            <div class="progress-bar" style="width: 0%"></div>
                         </div>
-                        <div class="progress-container">
-                            <div class="progress-bar-wrapper">
-                                <div class="progress-bar" style="width: 0%"></div>
-                            </div>
-                            <div class="progress-text">0%</div>
+                        <div class="progress-text">0%</div>
+                    </div>
+                    <button class="continue-btn" disabled>Продолжить</button>
+                </div>
+
+                <!-- HSK 3 -->
+                <div class="level-card locked">
+                    <div class="level-header">
+                        <h3 class="level-title">HSK 3 — Продвинутый</h3>
+                        <span class="level-status locked">Заблокировано</span>
+                    </div>
+                    <div class="progress-container">
+                        <div class="progress-bar-wrapper">
+                            <div class="progress-bar" style="width: 0%"></div>
                         </div>
-                        <button class="continue-btn" disabled>Продолжить</button>
+                        <div class="progress-text">0%</div>
+                    </div>
+                    <button class="continue-btn" disabled>Продолжить</button>
+                </div>
+            </div>
+
+            <!-- Изображение или детальная информация о уровне -->
+            <div class="image-container" id="level-image">
+                <img src="{% static 'images/background-building.png' %}" alt="Традиционное здание"
+                    class="background-img">
+            </div>
+            <div class="level-detail" id="level-detail" style="display: none;">
+                <h3 id="detail-title">HSK 1 — Базовый</h3>
+                <p id="detail-description">Базовый уровень китайского языка, включающий основные слова и грамматику.</p>
+                <div>
+                    <h4 id="detail-progress-title">Прогресс:</h4>
+                    <div class="progress-container">
+                        <div class="progress-bar-wrapper">
+                            <div class="progress-bar" id="detail-progress" style="width: 65%"></div>
+                        </div>
+                        <div class="progress-text" id="detail-progress-text">65%</div>
                     </div>
                 </div>
-                
-                <!-- Изображение или детальная информация о уровне -->
-                <div class="image-container" id="level-image">
-                    <img src="{% static 'images/background-building.png' %}" alt="Традиционное здание" class="background-img">
+                <div>
+                    <h4 id="detail-features-title">Что включает:</h4>
+                    <ul id="detail-features">
+                        <li>150 базовых слов</li>
+                        <li>Основные грамматические конструкции</li>
+                        <li>Простые диалоги</li>
+                        <li>Базовые фразы для повседневного общения</li>
+                    </ul>
                 </div>
-                <div class="level-detail" id="level-detail" style="display: none;">
-                    <h3 id="detail-title">HSK 1 — Базовый</h3>
-                    <p id="detail-description">Базовый уровень китайского языка, включающий основные слова и грамматику.</p>
-                    <div>
-                        <h4 id="detail-progress-title">Прогресс:</h4>
-                        <div class="progress-container">
-                            <div class="progress-bar-wrapper">
-                                <div class="progress-bar" id="detail-progress" style="width: 65%"></div>
-                            </div>
-                            <div class="progress-text" id="detail-progress-text">65%</div>
-                        </div>
-                    </div>
-                    <div>
-                        <h4 id="detail-features-title">Что включает:</h4>
-                        <ul id="detail-features">
-                            <li>150 базовых слов</li>
-                            <li>Основные грамматические конструкции</li>
-                            <li>Простые диалоги</li>
-                            <li>Базовые фразы для повседневного общения</li>
-                        </ul>
-                    </div>
-                    <button class="continue-btn">Начать обучение</button>
-                </div>
+                <button class="continue-btn">Начать обучение</button>
             </div>
         </div>
     </div>
+</div>
 
-    {% include 'translate-modal.html' %}
-    {% include 'camera-modal.html' %}
+{% include 'translate-modal.html' %}
+{% include 'camera-modal.html' %}
 
 {% endblock %}

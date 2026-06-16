@@ -8,9 +8,6 @@ def dictionary(request):
     words = Vocabulary.objects.all()
     return render(request, "dictionary.html", {'words': words, 'active_page': 'dictionary'})
 
-def word(request):
-    return render(request, "word.html", {'active_page': 'word'})
-
 def levels(request):
     return render(request, "levels.html", {'active_page': 'levels'})
 
