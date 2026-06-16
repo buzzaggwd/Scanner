@@ -96,6 +96,10 @@ def detect_objects(request):
                             'bbox': [int(x1), int(y1), int(x2), int(y2)]
                         })
             
+            # Оставляем только один объект с максимальной уверенностью
+            if detections:
+                detections = [max(detections, key=lambda x: x['confidence'])]
+            
             return JsonResponse({'detections': detections})
         except Exception as e:
             return JsonResponse({'error': str(e)}, status=500)

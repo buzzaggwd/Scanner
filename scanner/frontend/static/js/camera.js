@@ -3,6 +3,10 @@ let video = null;
 let canvas = null;
 let ctx = null;
 let detectionInterval = null;
+let drawInterval = null;
+let lastDetection = null;
+let lastDetectionTime = 0;
+const DISPLAY_DURATION = 3000; // Время отображения иероглифа после последней детекции (мс)
 
 function openCameraModal() {
     const modal = document.getElementById('camera-modal');
@@ -18,6 +22,12 @@ function closeCameraModal() {
         clearInterval(detectionInterval);
         detectionInterval = null;
     }
+    if (drawInterval) {
+        clearInterval(drawInterval);
+        drawInterval = null;
+    }
+    lastDetection = null;
+    lastDetectionTime = 0;
 }
 
 function initCamera() {
@@ -83,17 +93,19 @@ function toggleCamera() {
 function startDetection() {
     if (!video || !canvas || !ctx) return;
     
-    // Run detection every 500ms
+    // Run detection every 2 seconds (реже, чтобы не моргало)
     detectionInterval = setInterval(() => {
         detectObjects();
-    }, 500);
+    }, 2000);
+    
+    // Рисуем кадр и иероглиф 30 раз в секунду
+    drawInterval = setInterval(() => {
+        drawLastDetection();
+    }, 33);
 }
 
 function detectObjects() {
     if (!video || !canvas || !ctx) return;
-    
-    // Draw video frame to canvas without mirroring
-    ctx.drawImage(video, 0, 0, video.videoWidth, video.videoHeight);
     
     // Capture canvas as image
     const imageData = canvas.toDataURL('image/jpeg', 0.8);
@@ -108,9 +120,10 @@ function detectObjects() {
     })
     .then(response => response.json())
     .then(data => {
-        if (data.detections) {
-            // Draw detections on canvas
-            drawDetections(data.detections);
+        if (data.detections && data.detections.length > 0) {
+            // Сохраняем новую детекцию
+            lastDetection = data.detections[0];
+            lastDetectionTime = Date.now();
         }
     })
     .catch(error => {
@@ -118,51 +131,58 @@ function detectObjects() {
     });
 }
 
-function drawDetections(detections) {
+function drawLastDetection() {
     if (!ctx || !video) return;
     
-    // Clear previous detections
+    // Clear and draw video frame
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    
-    // Draw video frame without mirroring
     ctx.drawImage(video, 0, 0, video.videoWidth, video.videoHeight);
     
-    // Draw Chinese characters instead of bounding boxes
-    detections.forEach(detection => {
-        const { bbox, class: className, chinese, confidence } = detection;
-        const [x1, y1, x2, y2] = bbox;
-        
-        // Calculate center of the bounding box
-        const centerX = (x1 + x2) / 2;
-        const centerY = (y1 + y2) / 2;
-        
-        // Calculate box dimensions
-        const width = x2 - x1;
-        const height = y2 - y1;
-        
-        // Choose font size based on object size (bigger objects = bigger characters)
-        const fontSize = Math.max(40, Math.min(120, Math.sqrt(width * height) * 0.8));
-        
-        // Draw soft background circle for better visibility
-        const circleRadius = fontSize * 0.8;
-        ctx.beginPath();
-        ctx.arc(centerX, centerY, circleRadius, 0, Math.PI * 2);
-        ctx.fillStyle = 'rgba(76, 175, 80, 0.7)';
-        ctx.fill();
-        
-        // Draw the Chinese character centered
-        ctx.font = `${fontSize}px "Noto Sans SC", "Microsoft YaHei", sans-serif`;
-        ctx.fillStyle = '#FFFFFF';
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'middle';
-        ctx.fillText(chinese || className, centerX, centerY);
-        
-        // Optional: Draw small label with class name below
-        ctx.font = '12px Arial';
-        ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
-        ctx.fillText(`${className} (${(confidence * 100).toFixed(0)}%)`, centerX, centerY + circleRadius + 15);
-    });
+    // Проверяем, не истекло ли время отображения иероглифа
+    const now = Date.now();
+    if (lastDetection && (now - lastDetectionTime) < DISPLAY_DURATION) {
+        drawDetection(lastDetection);
+    }
 }
+
+function drawDetection(detection) {
+    if (!ctx || !video) return;
+    
+    const { bbox, class: className, chinese, confidence } = detection;
+    const [x1, y1, x2, y2] = bbox;
+    
+    // Calculate center of the bounding box
+    const centerX = (x1 + x2) / 2;
+    const centerY = (y1 + y2) / 2;
+    
+    // Calculate box dimensions
+    const width = x2 - x1;
+    const height = y2 - y1;
+    
+    // Choose font size based on object size (bigger objects = bigger characters)
+    const fontSize = Math.max(40, Math.min(120, Math.sqrt(width * height) * 0.8));
+    
+    // Draw soft background circle for better visibility
+    const circleRadius = fontSize * 0.8;
+    ctx.beginPath();
+    ctx.arc(centerX, centerY, circleRadius, 0, Math.PI * 2);
+    ctx.fillStyle = 'rgba(76, 175, 80, 0.7)';
+    ctx.fill();
+    
+    // Draw the Chinese character centered
+    ctx.font = `${fontSize}px "Noto Sans SC", "Microsoft YaHei", sans-serif`;
+    ctx.fillStyle = '#FFFFFF';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(chinese || className, centerX, centerY);
+    
+    // Optional: Draw small label with class name below
+    ctx.font = '12px Arial';
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
+    ctx.fillText(`${className} (${(confidence * 100).toFixed(0)}%)`, centerX, centerY + circleRadius + 15);
+}
+
+
 
 // Добавляем обработчики событий при загрузке страницы
 document.addEventListener('DOMContentLoaded', function() {
