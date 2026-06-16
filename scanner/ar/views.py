@@ -6,6 +6,48 @@ from PIL import Image
 from ultralytics import YOLO
 import cv2
 import numpy as np
+import requests
+import os
+from dotenv import load_dotenv
+from pathlib import Path
+
+# Load environment variables
+BASE_DIR = Path(__file__).resolve().parent.parent
+env_path = BASE_DIR / '.env'
+load_dotenv(dotenv_path=env_path)
+
+def translate_to_chinese(text):
+    """Перевод текста на китайский язык (иероглифы) через Yandex Translator"""
+    API_KEY = os.getenv('yandex-translater-api')
+    FOLDER_ID = os.getenv('yandex-folder')
+    
+    if not API_KEY or not FOLDER_ID:
+        print("Yandex Translator credentials not found")
+        return text
+    
+    url = "https://translate.api.cloud.yandex.net/translate/v2/translate"
+    
+    headers = {
+        "Content-Type": "application/json",
+        "Authorization": f"Api-Key {API_KEY}"
+    }
+    
+    body = {
+        "targetLanguageCode": "zh",
+        "texts": [text],
+        "folderId": FOLDER_ID
+    }
+    
+    try:
+        response = requests.post(url, json=body, headers=headers)
+        if response.status_code == 200:
+            return response.json()['translations'][0]['text']
+        else:
+            print(f"Translation API error: {response.status_code}")
+            return text
+    except Exception as e:
+        print(f"Error during translation: {str(e)}")
+        return text
 
 # Load YOLO8 model
 model = YOLO('yolov8n.pt')  # Using nano model for faster inference
@@ -44,8 +86,12 @@ def detect_objects(request):
                     
                     # Add to detections if confidence is high enough
                     if confidence > 0.5:
+                        # Переводим название объекта на китайский
+                        chinese_char = translate_to_chinese(class_name)
+                        
                         detections.append({
                             'class': class_name,
+                            'chinese': chinese_char,
                             'confidence': round(confidence, 2),
                             'bbox': [int(x1), int(y1), int(x2), int(y2)]
                         })
