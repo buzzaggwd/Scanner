@@ -7,6 +7,7 @@ let drawInterval = null;
 let lastDetection = null;
 let lastDetectionTime = 0;
 const DISPLAY_DURATION = 3000; // Время отображения иероглифа после последней детекции (мс)
+const TELEGRAM_ID = 123456789; // ID тестового пользователя
 
 function openCameraModal() {
     const modal = document.getElementById('camera-modal');
@@ -184,6 +185,48 @@ function drawDetection(detection) {
 
 
 
+// Функция для добавления последнего обнаруженного слова в словарь
+function addLastDetectedToVocab() {
+    if (!lastDetection) {
+        alert('Сначала нужно обнаружить объект!');
+        return;
+    }
+    
+    const wordId = lastDetection.word_id;
+    if (!wordId) {
+        alert('Не удалось получить ID слова');
+        return;
+    }
+    
+    // Отправляем запрос на сервер для добавления слова в словарь
+    fetch('/api/add_to_vocab/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            word_id: wordId,
+            telegram_id: TELEGRAM_ID,
+        }),
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === 'success') {
+            if (data.xp_gained > 0) {
+                alert(`Слово "${lastDetection.chinese}" успешно добавлено в словарь!\nПолучено ${data.xp_gained} XP`);
+            } else {
+                alert(`Слово "${lastDetection.chinese}" уже есть в словаре`);
+            }
+        } else {
+            alert('Ошибка: ' + data.message);
+        }
+    })
+    .catch(error => {
+        console.error('Error adding to vocabulary:', error);
+        alert('Произошла ошибка при добавлении слова');
+    });
+}
+
 // Добавляем обработчики событий при загрузке страницы
 document.addEventListener('DOMContentLoaded', function() {
     // Добавляем обработчик для кнопки "Включить камеру"
@@ -195,6 +238,6 @@ document.addEventListener('DOMContentLoaded', function() {
     // Добавляем обработчик для кнопки "Сканировать"
     const captureBtn = document.getElementById('capture-btn');
     if (captureBtn) {
-        captureBtn.addEventListener('click', detectObjects);
+        captureBtn.addEventListener('click', addLastDetectedToVocab);
     }
 });

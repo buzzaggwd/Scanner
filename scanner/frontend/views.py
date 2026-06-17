@@ -1,26 +1,37 @@
 from django.shortcuts import render
 from django.http import JsonResponse
-from backend.models import Vocabulary
+from backend.models import Vocabulary, User, User_to_vocab
 import json
 
 def home(request):
     return render(request, "home.html", {'active_page': 'home'})
 
 def dictionary(request):
-    words = Vocabulary.objects.all()
+    # Получаем тестового пользователя
+    test_user = User.objects.filter(username='test_user').first()
+    
+    if test_user:
+        # Получаем слова, которые добавил пользователь через user_to_vocab
+        user_vocab = User_to_vocab.objects.filter(user_id=test_user)
+        word_ids = user_vocab.values_list('word_id', flat=True)
+        words = Vocabulary.objects.filter(id__in=word_ids)
+    else:
+        # Если пользователя нет, показываем пустой список
+        words = Vocabulary.objects.none()
     
     # Подготовка данных слов для JavaScript
     words_data = []
     for word in words:
         # Парсинг примеров из поля example_sentences
-        # Формат: китайский1;перевод1;китайский2;перевод2;...
+        # Формат: китайский1|перевод1;китайский2|перевод2;...
         examples = []
         if word.example_sentences:
-            example_list = word.example_sentences.split(';')
-            for i in range(0, len(example_list), 2):
-                if i + 1 < len(example_list):
-                    chinese = example_list[i].strip()
-                    translation = example_list[i + 1].strip()
+            example_pairs = word.example_sentences.split(';')
+            for pair in example_pairs:
+                parts = pair.split('|')
+                if len(parts) >= 2:
+                    chinese = parts[0].strip()
+                    translation = parts[1].strip()
                     if chinese and translation:
                         examples.append({
                             'chinese': chinese,

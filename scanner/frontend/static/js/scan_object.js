@@ -1,3 +1,6 @@
+// Глобальная переменная для хранения данных последнего сканированного слова
+let lastScannedWord = null;
+
 // Функция для сканирования объекта
 function scanObject() {
     // В реальном приложении здесь будет код для сканирования
@@ -18,6 +21,13 @@ function scanObject() {
         .then((response) => response.json())
         .then((data) => {
             if (data.status === "success") {
+                // Сохраняем данные сканированного слова
+                lastScannedWord = {
+                    word: data.word,
+                    word_id: data.word_id,
+                    translation: data.translation
+                };
+                
                 // Отображаем результаты в модальном окне
                 document.getElementById("result-word").textContent = data.word;
                 document.getElementById("result-translation").textContent =
@@ -33,6 +43,40 @@ function scanObject() {
         .catch((error) => {
             console.error("Error:", error);
             alert("Произошла ошибка при обработке запроса");
+        });
+}
+
+// Функция для добавления слова в словарь
+function addToVocabulary() {
+    if (!lastScannedWord) {
+        alert("Нет данных о сканированном слове");
+        return;
+    }
+
+    // Отправляем запрос на сервер для добавления слова в словарь
+    fetch("api/add_to_vocab/", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            word_id: lastScannedWord.word_id,
+            telegram_id: 123456789, // Пример ID пользователя
+        }),
+    })
+        .then((response) => response.json())
+        .then((data) => {
+            if (data.status === "success") {
+                alert("Слово успешно добавлено в словарь!");
+                closeModal();
+            } else {
+                // Обрабатываем ошибку
+                alert("Ошибка: " + data.message);
+            }
+        })
+        .catch((error) => {
+            console.error("Error:", error);
+            alert("Произошла ошибка при добавлении слова");
         });
 }
 

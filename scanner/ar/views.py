@@ -102,6 +102,7 @@ def detect_objects(request):
                         detections.append({
                             'class': class_name,
                             'chinese': chinese_char,
+                            'word_id': word_in_db.id,  # Добавляем ID слова из базы
                             'confidence': round(confidence, 2),
                             'bbox': [int(x1), int(y1), int(x2), int(y2)]
                         })
