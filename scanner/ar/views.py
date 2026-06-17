@@ -11,6 +11,9 @@ import os
 from dotenv import load_dotenv
 from pathlib import Path
 
+# Import Vocabulary model
+from backend.models import Vocabulary
+
 # Load environment variables
 BASE_DIR = Path(__file__).resolve().parent.parent
 env_path = BASE_DIR / '.env'
@@ -86,8 +89,15 @@ def detect_objects(request):
                     
                     # Add to detections if confidence is high enough
                     if confidence > 0.5:
-                        # Переводим название объекта на китайский
-                        chinese_char = translate_to_chinese(class_name)
+                        # Проверяем, есть ли слово в базе данных
+                        word_in_db = Vocabulary.objects.filter(translation_eng__iexact=class_name).first()
+                        
+                        if word_in_db:
+                            # Если слово есть в базе, берем иероглифы оттуда
+                            chinese_char = word_in_db.translation_cn
+                        else:
+                            # Если слова нет в базе, пропускаем его
+                            continue
                         
                         detections.append({
                             'class': class_name,

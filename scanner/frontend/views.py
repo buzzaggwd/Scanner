@@ -50,11 +50,11 @@ def level(request, level_id):
     # Моковые данные для уровней HSK
     level_data = {
         1: {'name': 'Базовый', 'progress': 25, 'lessons': [
-            {'id': 1, 'number': 1, 'title': 'Приветствие и знакомство', 'description': 'Научитесь приветствовать и представляться', 'status': 'completed'},
-            {'id': 2, 'number': 2, 'title': 'Числа и время', 'description': 'Изучите основные числа и времена суток', 'status': 'available'},
-            {'id': 3, 'number': 3, 'title': 'Еда и напитки', 'description': 'Узнайте названия продуктов и закажите в кафе', 'status': 'available'},
-            {'id': 4, 'number': 4, 'title': 'Моя семья', 'description': 'Расскажите о своей семье', 'status': 'locked'},
-            {'id': 5, 'number': 5, 'title': 'Путешествия', 'description': 'Запланируйте поездку по Китаю', 'status': 'locked'},
+            {'id': 1, 'number': 1, 'title': 'Предметы в моей комнате', 'description': 'Сканируйте и узнавайте названия бытовых предметов', 'status': 'completed'},
+            {'id': 2, 'number': 2, 'title': 'Еда и напитки', 'description': 'Сканируйте продукты в кухне и узнавайте их названия', 'status': 'available'},
+            {'id': 3, 'number': 3, 'title': 'Одежда и аксессуары', 'description': 'Распознавайте одежду и украшения с помощью сканера', 'status': 'available'},
+            {'id': 4, 'number': 4, 'title': 'Техника и гаджеты', 'description': 'Узнавайте названия электроники и устройств', 'status': 'locked'},
+            {'id': 5, 'number': 5, 'title': 'Товары в магазине', 'description': 'Сканируйте товары при покупках в магазине', 'status': 'locked'},
         ]},
         2: {'name': 'Средний', 'progress': 0, 'lessons': [
             {'id': 6, 'number': 1, 'title': 'Работа и карьера', 'description': 'Обсудите свою профессиональную жизнь', 'status': 'available'},
