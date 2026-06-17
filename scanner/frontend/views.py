@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from django.http import JsonResponse
 from backend.models import Vocabulary, User, User_to_vocab
+from django.utils import timezone
+from datetime import date
 import json
 
 def home(request):
@@ -88,7 +90,33 @@ def level(request, level_id):
 
 
 def profile(request):
-    return render(request, "profile.html", {'active_page': 'profile'})
+    # Получаем тестового пользователя
+    test_user = User.objects.filter(username='test_user').first()
+    
+    if test_user:
+        # Общее количество слов
+        total_words = User_to_vocab.objects.filter(user_id=test_user).count()
+        
+        # Количество слов, добавленных сегодня
+        today = date.today()
+        words_today = User_to_vocab.objects.filter(
+            user_id=test_user,
+            created_at__date=today
+        ).count()
+        
+        # Общий опыт
+        experience_points = test_user.experience_points
+    else:
+        total_words = 0
+        words_today = 0
+        experience_points = 0
+    
+    return render(request, "profile.html", {
+        'active_page': 'profile',
+        'total_words': total_words,
+        'words_today': words_today,
+        'experience_points': experience_points
+    })
 
 def ar_scanner(request):
     return render(request, "ar_scanner.html", {'active_page': 'home'})

@@ -22,11 +22,11 @@
             <!-- Статистика -->
             <div class="stats-grid">
                 <div class="stat-card">
-                    <div class="stat-value">217</div>
+                    <div class="stat-value">{{ total_words }}</div>
                     <div class="stat-label">Слов собрано</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-value">18</div>
+                    <div class="stat-value">{{ words_today }}</div>
                     <div class="stat-label">Сегодня</div>
                 </div>
                 <div class="stat-card">
@@ -34,11 +34,7 @@
                     <div class="stat-label">Дней стрик</div>
                 </div>
                 <div class="stat-card">
-                    {% if experience_points %}
                     <div class="stat-value">{{ experience_points }}</div>
-                    {% else %}
-                    <div class="stat-value">0</div>
-                    {% endif %}
                     <div class="stat-label">Общий XP</div>
                 </div>
             </div>
