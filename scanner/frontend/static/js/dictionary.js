@@ -72,9 +72,75 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 // Данные всех слов из базы (получаем из глобальной переменной)
-const wordsData = window.wordsData || [];
+let wordsData = window.wordsData || [];
 console.log('wordsData загружен:', wordsData);
 console.log('Количество слов:', wordsData.length);
+
+// Функция для обновления списка слов из API
+window.updateWordList = function updateWordList() {
+    const telegram_id = 123456789; // ID тестового пользователя
+    
+    fetch(`/api/vocab/?telegram_id=${telegram_id}`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                wordsData = data.words;
+                console.log('Список слов обновлен:', wordsData);
+                renderWordList();
+            } else {
+                console.error('Ошибка обновления списка:', data.message);
+            }
+        })
+        .catch(error => {
+            console.error('Ошибка при получении списка слов:', error);
+        });
+}
+
+// Функция для отрисовки списка слов
+function renderWordList() {
+    const wordListContainer = document.querySelector('.word-list-container');
+    if (!wordListContainer) return;
+    
+    // Находим заголовок и сохраняем его
+    const title = wordListContainer.querySelector('.word-list-title');
+    
+    // Очищаем список, кроме заголовка
+    wordListContainer.innerHTML = '';
+    if (title) {
+        wordListContainer.appendChild(title);
+    }
+    
+    // Добавляем слова
+    wordsData.forEach((word, index) => {
+        const wordItem = document.createElement('div');
+        wordItem.className = `dictionary-word-item word-item ${index === 0 ? 'active' : ''}`;
+        wordItem.setAttribute('data-word-id', word.id);
+        wordItem.innerHTML = `
+            <div class="word-info">
+                <span class="word-chinese">${word.translation_cn}</span>
+                <span class="word-translation">${word.word}</span>
+                <span class="word-pinyin">${word.transcription}</span>
+            </div>
+            <div class="word-status learning"></div>
+        `;
+        
+        wordItem.addEventListener('click', function() {
+            // Убираем активный класс со всех элементов
+            document.querySelectorAll('.dictionary-word-item').forEach(w => w.classList.remove('active'));
+            // Добавляем активный класс на текущий элемент
+            this.classList.add('active');
+            // Показываем детали слова
+            showWordDetails(word.id);
+        });
+        
+        wordListContainer.appendChild(wordItem);
+    });
+    
+    // Если есть слова, показываем детали первого
+    if (wordsData.length > 0) {
+        showWordDetails(wordsData[0].id);
+    }
+}
 
 // Функция для отображения деталей слова
 function showWordDetails(wordId) {

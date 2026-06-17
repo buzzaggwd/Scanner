@@ -74,44 +74,129 @@ def process_scan(request):
 @csrf_exempt
 def add_to_vocab(request):
     if request.method == 'POST':
-        data = json.loads(request.body)
-        word_id = data.get('word_id')
-        telegram_id = data.get('telegram_id')
-
         try:
-            user = User.objects.get(telegram_id=telegram_id)
-            vocab_entry = Vocabulary.objects.get(id=word_id)
+            data = json.loads(request.body)
+            word_id = data.get('word_id')
+            telegram_id = data.get('telegram_id')
             
-            # Проверяем, есть ли уже слово в словаре пользователя
-            user_word, created = User_to_vocab.objects.get_or_create(
-                user_id=user, 
-                word_id=vocab_entry
+            # Находим пользователя по telegram_id
+            user = User.objects.filter(telegram_id=telegram_id).first()
+            if not user:
+                return JsonResponse({'status': 'error', 'message': 'Пользователь не найден'})
+            
+            # Находим слово
+            word = Vocabulary.objects.filter(id=word_id).first()
+            if not word:
+                return JsonResponse({'status': 'error', 'message': 'Слово не найдено'})
+            
+            # Проверяем, не добавлено ли слово уже
+            existing = User_to_vocab.objects.filter(user_id=user, word_id=word).first()
+            if existing:
+                return JsonResponse({
+                    'status': 'success', 
+                    'message': 'Слово уже в словаре',
+                    'xp_gained': 0
+                })
+            
+            # Добавляем слово в словарь пользователя
+            user_to_vocab = User_to_vocab.objects.create(
+                user_id=user,
+                word_id=word
             )
+            
+            # Начисляем опыт
+            user.experience_points += 50
+            user.save()
+            
+            # Возвращаем данные добавленного слова
+            word_data = {
+                'id': word.id,
+                'word': word.word,
+                'transcription': word.transcription,
+                'translation_eng': word.translation_eng,
+                'translation_cn': word.translation_cn,
+                'audio_url': word.audio_url,
+                'examples': []
+            }
+            
+            # Парсинг примеров
+            if word.example_sentences:
+                example_pairs = word.example_sentences.split(';')
+                for pair in example_pairs:
+                    parts = pair.split('|')
+                    if len(parts) >= 2:
+                        chinese = parts[0].strip()
+                        translation = parts[1].strip()
+                        if chinese and translation:
+                            word_data['examples'].append({
+                                'chinese': chinese,
+                                'translation': translation
+                            })
+            
+            return JsonResponse({
+                'status': 'success',
+                'message': 'Слово добавлено в словарь',
+                'xp_gained': 50,
+                'word': word_data
+            })
+            
+        except Exception as e:
+            return JsonResponse({'status': 'error', 'message': str(e)})
+    
+    return JsonResponse({'status': 'error', 'message': 'Неверный метод запроса'})
 
-            if created:
-                # Начисляем очки опыта за новое слово
-                xp_gain = 50
-                user.experience_points += xp_gain
-                user.save()
+@csrf_exempt
+def get_user_vocab(request):
+    if request.method == 'GET':
+        try:
+            telegram_id = request.GET.get('telegram_id', 123456789)
+            
+            # Находим пользователя по telegram_id
+            user = User.objects.filter(telegram_id=telegram_id).first()
+            if not user:
+                return JsonResponse({'status': 'error', 'message': 'Пользователь не найден'})
+            
+            # Получаем слова пользователя
+            user_vocab = User_to_vocab.objects.filter(user_id=user)
+            word_ids = user_vocab.values_list('word_id', flat=True)
+            words = Vocabulary.objects.filter(id__in=word_ids)
+            
+            # Подготовка данных слов
+            words_data = []
+            for word in words:
+                examples = []
+                if word.example_sentences:
+                    example_pairs = word.example_sentences.split(';')
+                    for pair in example_pairs:
+                        parts = pair.split('|')
+                        if len(parts) >= 2:
+                            chinese = parts[0].strip()
+                            translation = parts[1].strip()
+                            if chinese and translation:
+                                examples.append({
+                                    'chinese': chinese,
+                                    'translation': translation
+                                })
                 
-                return JsonResponse({
-                    'status': 'success',
-                    'message': 'Word added to vocabulary',
-                    'xp_gained': xp_gain,
-                    'total_xp': user.experience_points
+                words_data.append({
+                    'id': word.id,
+                    'word': word.word,
+                    'transcription': word.transcription,
+                    'translation_eng': word.translation_eng,
+                    'translation_cn': word.translation_cn,
+                    'audio_url': word.audio_url,
+                    'examples': examples
                 })
-            else:
-                return JsonResponse({
-                    'status': 'success',
-                    'message': 'Word already in vocabulary',
-                    'xp_gained': 0,
-                    'total_xp': user.experience_points
-                })
-
-        except User.DoesNotExist:
-            return JsonResponse({'status': 'error', 'message': 'User not found'}, status=404)
-        except Vocabulary.DoesNotExist:
-            return JsonResponse({'status': 'error', 'message': 'Word not found'}, status=404)
+            
+            return JsonResponse({
+                'status': 'success',
+                'words': words_data
+            })
+            
+        except Exception as e:
+            return JsonResponse({'status': 'error', 'message': str(e)})
+    
+    return JsonResponse({'status': 'error', 'message': 'Неверный метод запроса'})
 
 @csrf_exempt
 def translate_text(request):

@@ -214,6 +214,10 @@ function addLastDetectedToVocab() {
         if (data.status === 'success') {
             if (data.xp_gained > 0) {
                 alert(`Слово "${lastDetection.chinese}" успешно добавлено в словарь!\nПолучено ${data.xp_gained} XP`);
+                // Обновляем список слов в словаре
+                if (typeof updateWordList === 'function') {
+                    updateWordList();
+                }
             } else {
                 alert(`Слово "${lastDetection.chinese}" уже есть в словаре`);
             }
