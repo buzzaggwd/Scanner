@@ -32,8 +32,39 @@ function closeWordDetails() {
     document.getElementById('word-details-modal').style.display = 'none';
 }
 
+// Функция для фильтрации слов по поисковому запросу
+function filterWords(searchQuery) {
+    const wordItems = document.querySelectorAll('.dictionary-word-item');
+    const query = searchQuery.toLowerCase().trim();
+
+    wordItems.forEach(item => {
+        const wordChinese = item.querySelector('.word-chinese').textContent.toLowerCase();
+        const wordTranslation = item.querySelector('.word-translation').textContent.toLowerCase();
+
+        if (wordChinese.includes(query) || wordTranslation.includes(query)) {
+            item.style.display = 'block';
+        } else {
+            item.style.display = 'none';
+        }
+    });
+
+    // После фильтрации показываем первое видимое слово
+    const visibleItems = document.querySelectorAll('.dictionary-word-item[style="display: block;"]');
+    if (visibleItems.length > 0) {
+        const firstVisibleId = parseInt(visibleItems[0].getAttribute('data-word-id'));
+        showWordDetails(firstVisibleId);
+        document.getElementById('word-details-modal').style.display = 'block';
+    }
+}
+
 // Добавляем обработчики кликов на слова
 document.addEventListener('DOMContentLoaded', function () {
+    // Добавляем обработчик для поля поиска
+    const searchInput = document.querySelector('.search-input');
+    searchInput.addEventListener('input', function () {
+        filterWords(this.value);
+    });
+
     const wordItems = document.querySelectorAll('.dictionary-word-item');
 
     wordItems.forEach(item => {
