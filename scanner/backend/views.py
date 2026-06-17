@@ -185,7 +185,7 @@ def get_user_vocab(request):
                     'translation_eng': word.translation_eng,
                     'translation_cn': word.translation_cn,
                     'audio_url': word.audio_url,
-                    'examples': examples
+                    'examples': word.examples_sentences
                 })
             
             return JsonResponse({

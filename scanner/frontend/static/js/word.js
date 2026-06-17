@@ -1,6 +1,9 @@
 // Функция для отображения деталей слова
 function showWordDetails(wordId) {
-    const word = wordsData.find(w => w.id === wordId);
+    console.log('wordsData:', window.wordsData);
+    console.log('wordId:', wordId);
+    const word = window.wordsData.find(w => w.id === wordId);
+    console.log('found word:', word);
     if (!word) return;
 
     document.getElementById('detail-chinese').textContent = word.translation_cn;

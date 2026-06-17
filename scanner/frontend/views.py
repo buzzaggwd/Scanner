@@ -28,12 +28,11 @@ def dictionary(request):
         # Формат: китайский1|перевод1;китайский2|перевод2;...
         examples = []
         if word.example_sentences:
-            example_pairs = word.example_sentences.split(';')
-            for pair in example_pairs:
-                parts = pair.split('|')
-                if len(parts) >= 2:
-                    chinese = parts[0].strip()
-                    translation = parts[1].strip()
+            example_list = word.example_sentences.split(';')
+            for i in range(0, len(example_list), 2):
+                if i + 1 < len(example_list):
+                    chinese = example_list[i].strip()
+                    translation = example_list[i + 1].strip()
                     if chinese and translation:
                         examples.append({
                             'chinese': chinese,
