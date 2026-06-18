@@ -7,7 +7,7 @@ class UserAdmin(admin.ModelAdmin):
 
 @admin.register(Vocabulary)
 class VocabularyAdmin(admin.ModelAdmin):
-    list_display = ('id', 'word', 'transcription', 'translation_eng', 'translation_cn', 'audio_url', 'example_sentences', 'status', 'created_at', 'updated_at')
+    list_display = ('id', 'word', 'transcription', 'translation_eng', 'translation_cn', 'audio_url', 'example_sentences', 'created_at', 'updated_at')
 
 @admin.register(User_to_vocab)
 class User_to_vocabAdmin(admin.ModelAdmin):

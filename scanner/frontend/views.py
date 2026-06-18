@@ -17,9 +17,12 @@ def dictionary(request):
         user_vocab = User_to_vocab.objects.filter(user_id=test_user)
         word_ids = user_vocab.values_list('word_id', flat=True)
         words = Vocabulary.objects.filter(id__in=word_ids)
+        # Создаем словарь для быстрого доступа к статусам
+        word_status_dict = {uv.word_id_id: uv.status for uv in user_vocab}
     else:
         # Если пользователя нет, показываем пустой список
         words = Vocabulary.objects.none()
+        word_status_dict = {}
     
     # Подготовка данных слов для JavaScript
     words_data = []
@@ -39,6 +42,10 @@ def dictionary(request):
                             'translation': translation
                         })
         
+        # Отладка: проверяем статус
+        current_status = word_status_dict.get(word.id, 'learning')
+        print(f"Word {word.id}: {word.word} - status: {current_status}")
+        
         words_data.append({
             'id': word.id,
             'word': word.word,
@@ -46,11 +53,12 @@ def dictionary(request):
             'translation_eng': word.translation_eng,
             'translation_cn': word.translation_cn,
             'audio_url': word.audio_url,
-            'examples': examples
+            'examples': examples,
+            'status': current_status
         })
     
     return render(request, "dictionary.html", {
-        'words': words,
+        'words': words_data,
         'words_json': json.dumps(words_data),
         'active_page': 'dictionary'
     })

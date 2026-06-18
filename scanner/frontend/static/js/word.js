@@ -57,6 +57,31 @@ function filterWords(searchQuery) {
     }
 }
 
+function filterStatus(searchQuery) {
+    const wordItems = document.querySelectorAll('.dictionary-word-item');
+    const query = searchQuery.toLowerCase().trim();
+
+    // Обновляем активный класс на кнопках
+    const categoryButtons = document.querySelectorAll('.category-btn');
+    categoryButtons.forEach(btn => {
+        btn.classList.remove('active');
+    });
+    
+    // Находим кнопку, которая вызвала функцию, и добавляем ей active
+    event.target.classList.add('active');
+
+    // Фильтруем слова
+    wordItems.forEach(item => {
+        const wordStatus = item.querySelector('.word-status').classList[1];
+        if (query === 'all' || wordStatus === query) {
+            item.style.display = 'flex';
+        } else {
+            item.style.display = 'none';
+        }
+    });
+
+}
+
 // Добавляем обработчики кликов на слова
 document.addEventListener('DOMContentLoaded', function () {
     // Добавляем обработчик для поля поиска

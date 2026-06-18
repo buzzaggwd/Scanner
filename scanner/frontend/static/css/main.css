@@ -875,7 +875,7 @@ body {
 }
 
 .word-status.learned {
-    background-color: var(--primary);
+    background-color: green;
 }
 
 .word-details {

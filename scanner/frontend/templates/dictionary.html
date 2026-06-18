@@ -16,9 +16,9 @@
 
         <!-- Категории -->
         <div class="categories">
-            <button class="category-btn active">Все</button>
-            <button class="category-btn">Изучаемые</button>
-            <button class="category-btn">Выученные</button>
+            <button class="category-btn active" onclick="filterStatus('all')">Все</button>
+            <button class="category-btn" onclick="filterStatus('learning')">Изучаемые</button>
+            <button class="category-btn" onclick="filterStatus('learned')">Выученные</button>
         </div>
 
         <!-- Содержимое словаря -->
@@ -34,7 +34,7 @@
                         <span class="word-translation">{{ word.word }}</span>
                         <span class="word-pinyin">{{ word.transcription }}</span>
                     </div>
-                    <div class="word-status learning"></div>
+                    <div class="word-status {% if word.status == 'learned' %}learned{% elif word.status == 'learning' %}learning{% else %}learning{% endif %}"></div>
                 </div>
                 {% endfor %}
             </div>

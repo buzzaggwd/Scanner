@@ -21,7 +21,6 @@ class Vocabulary(models.Model):
     translation_cn = models.CharField(max_length=255)
     audio_url = models.CharField(max_length=255)
     example_sentences = models.TextField(blank=True, null=True) # Будем через ; записывать примеры
-    status = models.CharField(max_length=255)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -32,6 +31,7 @@ class User_to_vocab(models.Model):
     id = models.AutoField(primary_key=True)
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
     word_id = models.ForeignKey(Vocabulary, on_delete=models.CASCADE)
+    status = models.CharField(max_length=255, default='learning')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
