@@ -2047,6 +2047,29 @@ body {
     background-color: #F44336;
 }
 
+.word-status.toggle-status {
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.word-status.toggle-status:hover {
+    transform: scale(1.2);
+}
+
+/* Для мобильных устройств делаем кружок больше */
+@media (max-width: 768px) {
+    .word-status {
+        width: 24px;
+        height: 24px;
+    }
+    
+    .word-status.toggle-status {
+        padding: 8px;
+        border-radius: 50%;
+    }
+}
+
 
 
 .detail-chinese {

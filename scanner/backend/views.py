@@ -199,6 +199,45 @@ def get_user_vocab(request):
     return JsonResponse({'status': 'error', 'message': 'Неверный метод запроса'})
 
 @csrf_exempt
+def update_word_status(request):
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            word_id = data.get('word_id')
+            telegram_id = data.get('telegram_id', 123456789)
+
+            # Находим пользователя
+            user = User.objects.filter(telegram_id=telegram_id).first()
+            if not user:
+                return JsonResponse({'status': 'error', 'message': 'Пользователь не найден'})
+
+            # Находим слово
+            word = Vocabulary.objects.filter(id=word_id).first()
+            if not word:
+                return JsonResponse({'status': 'error', 'message': 'Слово не найдено'})
+
+            # Находим запись в user_to_vocab
+            user_vocab = User_to_vocab.objects.filter(user_id=user, word_id=word).first()
+            if not user_vocab:
+                return JsonResponse({'status': 'error', 'message': 'Слово не в словаре пользователя'})
+
+            # Переключаем статус
+            new_status = 'learned' if user_vocab.status == 'learning' else 'learning'
+            user_vocab.status = new_status
+            user_vocab.save()
+
+            return JsonResponse({
+                'status': 'success',
+                'new_status': new_status,
+                'message': f'Статус изменен на {"выученное" if new_status == "learned" else "изучаемое"}'
+            })
+
+        except Exception as e:
+            return JsonResponse({'status': 'error', 'message': str(e)})
+
+    return JsonResponse({'status': 'error', 'message': 'Неверный метод запроса'})
+
+@csrf_exempt
 def translate_text(request):
     if request.method == 'POST':
         data = json.loads(request.body)

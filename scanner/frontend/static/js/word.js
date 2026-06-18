@@ -57,7 +57,7 @@ function filterWords(searchQuery) {
     }
 }
 
-function filterStatus(searchQuery) {
+function filterStatus(searchQuery, event) {
     const wordItems = document.querySelectorAll('.dictionary-word-item');
     const query = searchQuery.toLowerCase().trim();
 
@@ -68,18 +68,35 @@ function filterStatus(searchQuery) {
     });
     
     // Находим кнопку, которая вызвала функцию, и добавляем ей active
-    event.target.classList.add('active');
+    if (event && event.target) {
+        event.target.classList.add('active');
+    }
 
     // Фильтруем слова
     wordItems.forEach(item => {
-        const wordStatus = item.querySelector('.word-status').classList[1];
-        if (query === 'all' || wordStatus === query) {
-            item.style.display = 'flex';
-        } else {
-            item.style.display = 'none';
+        const statusElement = item.querySelector('.word-status');
+        const isLearning = statusElement.classList.contains('learning');
+        const isLearned = statusElement.classList.contains('learned');
+        
+        let shouldShow = false;
+        if (query === 'all') {
+            shouldShow = true;
+        } else if (query === 'learning' && isLearning) {
+            shouldShow = true;
+        } else if (query === 'learned' && isLearned) {
+            shouldShow = true;
         }
+        
+        item.style.display = shouldShow ? 'flex' : 'none';
     });
 
+    // После фильтрации показываем первое видимое слово
+    const visibleItems = document.querySelectorAll('.dictionary-word-item[style="display: flex;"]');
+    if (visibleItems.length > 0) {
+        const firstVisibleId = parseInt(visibleItems[0].getAttribute('data-word-id'));
+        showWordDetails(firstVisibleId);
+        document.getElementById('word-details-modal').style.display = 'block';
+    }
 }
 
 // Добавляем обработчики кликов на слова
@@ -115,3 +132,40 @@ document.addEventListener('DOMContentLoaded', function () {
         document.getElementById('word-details-modal').style.display = 'block';
     }
 });
+
+// Функция для переключения статуса слова
+function toggleWordStatus(statusElement, event) {
+    // Останавливаем всплытие события, чтобы не открывалась карточка
+    if (event) {
+        event.stopPropagation();
+    }
+    
+    const wordId = statusElement.getAttribute('data-word-id');
+    const currentStatus = statusElement.classList.contains('learning') ? 'learning' : 'learned';
+
+    // Отправляем запрос на сервер
+    fetch('/api/update_word_status/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            word_id: wordId,
+            telegram_id: 123456789 // TODO: Заменить на реальный telegram_id пользователя
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === 'success') {
+            // Обновляем UI
+            statusElement.classList.remove('learning', 'learned');
+            statusElement.classList.add(data.new_status);
+            console.log(data.message);
+        } else {
+            console.error('Ошибка:', data.message);
+        }
+    })
+    .catch(error => {
+        console.error('Ошибка запроса:', error);
+    });
+}
