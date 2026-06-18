@@ -14,7 +14,7 @@
     margin-bottom: 30px;
 }
 
-.back-btn {
+.lesson-header .back-btn {
     background: rgba(255, 255, 255, 0.2);
     border: none;
     border-radius: 50%;
@@ -28,7 +28,7 @@
     transition: all 0.3s ease;
 }
 
-.back-btn:hover {
+.lesson-header .back-btn:hover {
     background: rgba(255, 255, 255, 0.3);
     transform: scale(1.05);
 }
@@ -172,14 +172,14 @@
     cursor: not-allowed;
 }
 
-.word-chinese {
+.word-card .word-chinese {
     display: block;
     color: white;
     font-size: 20px;
     font-weight: bold;
 }
 
-.word-translation {
+.word-card .word-translation {
     display: block;
     color: rgba(255, 255, 255, 0.8);
     font-size: 12px;

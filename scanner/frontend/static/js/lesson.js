@@ -30,42 +30,42 @@ document.addEventListener('DOMContentLoaded', function () {
                     { type: 'text_translation', content: 'Я хочу съесть яблоко.' },
                 ],
                 available_words: [
-                    { id: 'word-1', chinese: '苹果', translation: 'яблоко' },
-                    { id: 'word-2', chinese: '书', translation: 'книга' },
-                    { id: 'word-3', chinese: '水', translation: 'вода' },
+                    { id: 'word-1', chinese: '苹果'},
+                    { id: 'word-2', chinese: '书'},
+                    { id: 'word-3', chinese: '杯子'},
                 ],
                 correct_answer: 'word-1',
                 explanation: 'Правильный ответ: 苹果 (яблоко)'
             },
             {
                 sentence_parts: [
-                    { type: 'text', content: '这是我的' },
+                    { type: 'text', content: '桌子里上有一个' },
                     { type: 'blank', id: 'blank-1' },
                     { type: 'text', content: '。' },
-                    { type: 'text_translation', content: 'Это мой телефон.' },
+                    { type: 'text_translation', content: 'На столе лежит банан.' },
                 ],
                 available_words: [
-                    { id: 'word-1', chinese: '手机', translation: 'телефон' },
-                    { id: 'word-2', chinese: '桌子', translation: 'стол' },
-                    { id: 'word-3', chinese: '杯子', translation: 'стакан' },
+                    { id: 'word-1', chinese: '笔'},
+                    { id: 'word-2', chinese: '叉子'},
+                    { id: 'word-3', chinese: '香蕉'},
                 ],
-                correct_answer: 'word-1',
-                explanation: 'Правильный ответ: 手机 (телефон)'
+                correct_answer: 'word-3',
+                explanation: 'Правильный ответ: 香蕉 (банан)'
             },
             {
                 sentence_parts: [
-                    { type: 'text', content: '我有一个' },
+                    { type: 'text', content: '我有一个大的' },
                     { type: 'blank', id: 'blank-1' },
                     { type: 'text', content: '。' },
-                    { type: 'text_translation', content: 'У меня есть друг.' },
+                    { type: 'text_translation', content: 'У меня есть большой арбуз.' },
                 ],
                 available_words: [
-                    { id: 'word-1', chinese: '朋友', translation: 'друг' },
-                    { id: 'word-2', chinese: '猫', translation: 'кошка' },
-                    { id: 'word-3', chinese: '电脑', translation: 'компьютер' },
+                    { id: 'word-1', chinese: '牙刷'},
+                    { id: 'word-2', chinese: '西瓜'},
+                    { id: 'word-3', chinese: '手机'},
                 ],
-                correct_answer: 'word-1',
-                explanation: 'Правильный ответ: 朋友 (друг)'
+                correct_answer: 'word-2',
+                explanation: 'Правильный ответ: 西瓜 (арбуз)'
             }
         ];
     }
