@@ -1,0 +1,332 @@
+.lesson-screen {
+    min-height: 100vh;
+    padding: 20px;
+    background: linear-gradient(135deg, var(--primary-light) 0%, var(--primary) 100%);
+}
+
+.lesson-header {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    border-radius: 12px;
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 30px;
+}
+
+.back-btn {
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    border-radius: 50%;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.back-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: scale(1.05);
+}
+
+.lesson-title-section h1 {
+    color: white;
+    font-size: 20px;
+    margin: 0;
+}
+
+.lesson-title-section p {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 14px;
+    margin: 4px 0 0 0;
+}
+
+.lesson-content {
+    background: white;
+    border-radius: 20px;
+    padding: 24px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+}
+
+.task-section {
+    text-align: center;
+    margin-bottom: 24px;
+}
+
+.task-section h2 {
+    color: #333;
+    font-size: 18px;
+    margin: 0 0 8px 0;
+}
+
+.task-description {
+    color: #666;
+    font-size: 14px;
+    margin: 0;
+}
+
+.sentence-container {
+    background: #f8f9fa;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 16px;
+}
+
+.sentence-translation-container {
+    background: var(--primary-light);
+    border-radius: 12px;
+    padding: 16px 20px;
+    margin-bottom: 24px;
+    border-left: 4px solid var(--primary);
+}
+
+.translation-label {
+    color: var(--primary);
+    font-size: 12px;
+    font-weight: 600;
+    margin: 0 0 8px 0;
+}
+
+.sentence-translation {
+    color: var(--primary-dark);
+    font-size: 14px;
+    line-height: 1.6;
+    margin: 0;
+}
+
+.sentence {
+    font-size: 18px;
+    line-height: 1.8;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+}
+
+.sentence-text {
+    color: #333;
+}
+
+.blank-slot {
+    min-width: 80px;
+    height: 40px;
+    border: 2px dashed var(--primary);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    background: white;
+}
+
+.blank-slot.drag-over {
+    border-color: var(--primary-dark);
+    background: var(--primary-light);
+    transform: scale(1.05);
+}
+
+.blank-placeholder {
+    color: #999;
+    font-style: italic;
+}
+
+.words-container h3 {
+    color: #333;
+    font-size: 16px;
+    margin: 0 0 16px 0;
+}
+
+.words-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.word-card {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    border-radius: 12px;
+    padding: 12px;
+    text-align: center;
+    cursor: grab;
+    transition: all 0.3s ease;
+}
+
+.word-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4);
+}
+
+.word-card.dragging {
+    opacity: 0.5;
+    transform: scale(0.95);
+    cursor: grabbing;
+}
+
+.word-card.used {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.word-chinese {
+    display: block;
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.word-translation {
+    display: block;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 12px;
+    margin-top: 4px;
+}
+
+.submit-btn {
+    width: 100%;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 16px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.submit-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4);
+}
+
+.submit-btn:active {
+    transform: translateY(0);
+}
+
+.result-section {
+    margin-top: 24px;
+    padding: 20px;
+    border-radius: 12px;
+    text-align: center;
+}
+
+.result-section.correct {
+    background: #d4edda;
+    border: 1px solid #c3e6cb;
+}
+
+.result-section.incorrect {
+    background: #f8d7da;
+    border: 1px solid #f5c6cb;
+}
+
+.result-message {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 12px;
+}
+
+.result-section.correct .result-message {
+    color: #155724;
+}
+
+.result-section.incorrect .result-message {
+    color: #721c24;
+}
+
+.correct-answer {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 16px;
+}
+
+.next-btn {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 24px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.next-btn:hover {
+    transform: translateY(-2px);
+}
+
+/* Мобильные устройства */
+@media (max-width: 768px) {
+    .sentence {
+        font-size: 16px;
+    }
+
+    .blank-slot {
+        min-width: 60px;
+        height: 36px;
+    }
+
+    .words-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Поддержка цветных тем для урока */
+
+/* Зеленая тема (по умолчанию) */
+body.green-theme .lesson-screen {
+    background: linear-gradient(135deg, #E8F5E8 0%, #C8E6C9 100%);
+}
+
+body.green-theme .word-card:hover {
+    box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4);
+}
+
+body.green-theme .submit-btn:hover {
+    box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4);
+}
+
+/* Синяя тема */
+body.blue-theme .lesson-screen {
+    background: linear-gradient(135deg, #E3F2FD 0%, #BBDEFB 100%);
+}
+
+body.blue-theme .word-card:hover {
+    box-shadow: 0 6px 20px rgba(33, 150, 243, 0.4);
+}
+
+body.blue-theme .submit-btn:hover {
+    box-shadow: 0 6px 20px rgba(33, 150, 243, 0.4);
+}
+
+/* Оранжевая тема */
+body.orange-theme .lesson-screen {
+    background: linear-gradient(135deg, #FFF3E0 0%, #FFE0B2 100%);
+}
+
+body.orange-theme .word-card:hover {
+    box-shadow: 0 6px 20px rgba(255, 152, 0, 0.4);
+}
+
+body.orange-theme .submit-btn:hover {
+    box-shadow: 0 6px 20px rgba(255, 152, 0, 0.4);
+}
+
+/* Фиолетовая тема */
+body.purple-theme .lesson-screen {
+    background: linear-gradient(135deg, #F3E5F5 0%, #E1BEE7 100%);
+}
+
+body.purple-theme .word-card:hover {
+    box-shadow: 0 6px 20px rgba(156, 39, 176, 0.4);
+}
+
+body.purple-theme .submit-btn:hover {
+    box-shadow: 0 6px 20px rgba(156, 39, 176, 0.4);
+}
