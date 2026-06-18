@@ -127,6 +127,7 @@ function loadTask(taskIndex) {
         wordCard.id = word.id;
         wordCard.draggable = true;
         wordCard.setAttribute('ondragstart', `drag(event, '${word.id}')`);
+        wordCard.addEventListener('touchstart', handleTouchStart, { passive: false });
 
         const chineseSpan = document.createElement('span');
         chineseSpan.className = 'word-chinese';
@@ -149,6 +150,9 @@ function loadTask(taskIndex) {
 
     // Сбрасываем droppedWordIds
     droppedWordIds = {};
+
+    // Подключаем обработчики сенсорных событий
+    setupTouchEvents();
 }
 
 // Функции для перетаскивания
@@ -169,14 +173,17 @@ function allowDrop(event) {
 
 function drop(event, blankId) {
     event.preventDefault();
+    performDrop(blankId, event.dataTransfer.getData('text/plain'));
+}
 
+// Общая функция для обработки сброса слова
+function performDrop(blankId, wordId) {
     // Убираем классы
     document.querySelectorAll('.blank-slot').forEach(el => el.classList.remove('drag-over'));
     if (draggedWord) {
         document.getElementById(draggedWord).classList.remove('dragging');
     }
 
-    const wordId = event.dataTransfer.getData('text/plain');
     if (!wordId || !draggedWord) return;
 
     const blankSlot = document.getElementById(`blank-${blankId}`);
@@ -199,6 +206,124 @@ function drop(event, blankId) {
     wordCard.classList.add('used');
     droppedWordIds[blankId] = wordId;
 }
+
+// Поддержка сенсорных событий для мобильных устройств
+let touchStartX = 0;
+let touchStartY = 0;
+let touchWordId = null;
+let isDragging = false;
+
+function handleTouchStart(event) {
+    const target = event.target.closest('.word-card');
+    if (target && target.classList.contains('draggable')) {
+        touchWordId = target.id;
+        draggedWord = target.id;
+        isDragging = true;
+        const touch = event.touches[0];
+        touchStartX = touch.clientX;
+        touchStartY = touch.clientY;
+        target.classList.add('dragging');
+        event.preventDefault();
+    }
+}
+
+function handleTouchMove(event) {
+    if (!isDragging || !touchWordId) return;
+
+    const touch = event.touches[0];
+    const currentX = touch.clientX;
+    const currentY = touch.clientY;
+
+    // Проверяем, над каким слотом находится палец
+    document.querySelectorAll('.blank-slot').forEach(slot => {
+        const rect = slot.getBoundingClientRect();
+        if (currentX >= rect.left && currentX <= rect.right &&
+            currentY >= rect.top && currentY <= rect.bottom) {
+            slot.classList.add('drag-over');
+        } else {
+            slot.classList.remove('drag-over');
+        }
+    });
+
+    event.preventDefault();
+}
+
+function handleTouchEnd(event) {
+    if (!isDragging || !touchWordId) {
+        isDragging = false;
+        touchWordId = null;
+        return;
+    }
+
+    const touch = event.changedTouches[0];
+    const currentX = touch.clientX;
+    const currentY = touch.clientY;
+
+    // Ищем слот, над которым закончено касание
+    let targetBlankId = null;
+    document.querySelectorAll('.blank-slot').forEach(slot => {
+        const rect = slot.getBoundingClientRect();
+        if (currentX >= rect.left && currentX <= rect.right &&
+            currentY >= rect.top && currentY <= rect.bottom) {
+            targetBlankId = slot.id.replace('blank-', '');
+        }
+        slot.classList.remove('drag-over');
+    });
+
+    // Если найден слот, выполняем сброс
+    if (targetBlankId) {
+        performDrop(targetBlankId, touchWordId);
+    } else if (draggedWord) {
+        // Если не над слотом, убираем класс dragging
+        document.getElementById(draggedWord).classList.remove('dragging');
+    }
+
+    isDragging = false;
+    touchWordId = null;
+}
+
+// Добавляем обработчики сенсорных событий при загрузке
+function addTouchEventListeners() {
+    const wordsGrid = document.querySelector('.words-grid');
+    const sentenceContainer = document.querySelector('.sentence');
+
+    if (wordsGrid) {
+        wordsGrid.addEventListener('touchstart', handleTouchStart, { passive: false });
+    }
+    if (sentenceContainer) {
+        sentenceContainer.addEventListener('touchmove', handleTouchMove, { passive: false });
+        sentenceContainer.addEventListener('touchend', handleTouchEnd, { passive: false });
+    }
+    // Также добавляем глобальные обработчики для движения пальца за пределы sentence
+    document.addEventListener('touchmove', handleTouchMove, { passive: false });
+    document.addEventListener('touchend', handleTouchEnd, { passive: false });
+}
+
+// Добавляем обработчики сенсорных событий
+function setupTouchEvents() {
+    // Сначала удаляем старые обработчики, чтобы не было дублирования
+    const wordsGrid = document.querySelector('.words-grid');
+    const sentenceContainer = document.querySelector('.sentence');
+
+    if (wordsGrid) {
+        wordsGrid.removeEventListener('touchstart', handleTouchStart);
+        wordsGrid.addEventListener('touchstart', handleTouchStart, { passive: false });
+    }
+    if (sentenceContainer) {
+        sentenceContainer.removeEventListener('touchmove', handleTouchMove);
+        sentenceContainer.removeEventListener('touchend', handleTouchEnd);
+        sentenceContainer.addEventListener('touchmove', handleTouchMove, { passive: false });
+        sentenceContainer.addEventListener('touchend', handleTouchEnd, { passive: false });
+    }
+    // Добавляем глобальные обработчики для движения пальца за пределами sentence
+    document.removeEventListener('touchmove', handleTouchMove);
+    document.removeEventListener('touchend', handleTouchEnd);
+    document.addEventListener('touchmove', handleTouchMove, { passive: false });
+    document.addEventListener('touchend', handleTouchEnd, { passive: false });
+}
+
+// Вызываем setupTouchEvents при готовности DOM
+document.addEventListener('DOMContentLoaded', setupTouchEvents);
 
 // Проверка ответа
 function checkAnswer() {

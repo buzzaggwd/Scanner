@@ -264,16 +264,46 @@
 /* Мобильные устройства */
 @media (max-width: 768px) {
     .sentence {
-        font-size: 16px;
+        font-size: 18px;
+        gap: 12px;
     }
 
     .blank-slot {
-        min-width: 60px;
-        height: 36px;
+        min-width: 120px;
+        height: 60px;
+        padding: 12px 20px;
+        touch-action: manipulation;
+        -webkit-tap-highlight-color: transparent;
     }
 
     .words-grid {
         grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+
+    .word-card {
+        padding: 24px 20px;
+        min-height: 90px;
+        touch-action: manipulation;
+        -webkit-tap-highlight-color: transparent;
+        cursor: pointer;
+    }
+
+    .word-card:active {
+        transform: scale(0.98);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .word-card .word-chinese {
+        font-size: 28px;
+    }
+
+    .word-card .word-translation {
+        font-size: 14px;
+    }
+
+    .blank-slot:active {
+        transform: scale(0.98);
     }
 
     /* Кнопка "назад" должна оставаться круглой */
