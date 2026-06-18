@@ -21,6 +21,7 @@ class Vocabulary(models.Model):
     translation_cn = models.CharField(max_length=255)
     audio_url = models.CharField(max_length=255)
     example_sentences = models.TextField(blank=True, null=True) # Будем через ; записывать примеры
+    difficulty = models.CharField(max_length=255, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

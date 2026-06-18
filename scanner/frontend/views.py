@@ -6,7 +6,23 @@ from datetime import date
 import json
 
 def home(request):
-    return render(request, "home.html", {'active_page': 'home'})
+    # Получаем тестового пользователя
+    test_user = User.objects.filter(username='test_user').first()
+    
+    # Количество слов пользователя из user_to_vocab
+    if test_user:
+        user_words_count = User_to_vocab.objects.filter(user_id=test_user).count()
+    else:
+        user_words_count = 0
+    
+    # Общее количество слов в vocabulary
+    total_vocab_count = Vocabulary.objects.count()
+    
+    return render(request, "home.html", {
+        'active_page': 'home',
+        'user_words_count': user_words_count,
+        'total_vocab_count': total_vocab_count
+    })
 
 def dictionary(request):
     # Получаем тестового пользователя
