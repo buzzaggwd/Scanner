@@ -53,4 +53,14 @@
 {% include 'translate-modal.html' %}
 {% include 'camera-modal.html' %}
 
+<script>
+    function goBack() {
+        window.history.back();
+    }
+    
+    function startLesson(lessonId) {
+        window.location.href = '/lesson/' + lessonId;
+    }
+</script>
+
 {% endblock %}

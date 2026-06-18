@@ -96,6 +96,34 @@ def level(request, level_id):
     })
 
 
+def lesson(request, lesson_id):
+    # Моковые данные для урока
+    lessons = {
+        1: {
+            'id': 1,
+            'number': 1,
+            'title': 'Предметы в моей комнате',
+            'description': 'Сканируйте и узнавайте названия бытовых предметов'
+        },
+        2: {
+            'id': 2,
+            'number': 2,
+            'title': 'Еда и напитки',
+            'description': 'Сканируйте продукты в кухне и узнавайте их названия'
+        },
+        3: {
+            'id': 3,
+            'number': 3,
+            'title': 'Одежда и аксессуары',
+            'description': 'Распознавайте одежду и украшения с помощью сканера'
+        }
+    }
+    
+    current_lesson = lessons.get(lesson_id, {'id': lesson_id, 'number': lesson_id, 'title': 'Урок', 'description': ''})
+    
+    return render(request, "lesson.html", {'lesson': current_lesson})
+
+
 def profile(request):
     # Получаем тестового пользователя
     test_user = User.objects.filter(username='test_user').first()
