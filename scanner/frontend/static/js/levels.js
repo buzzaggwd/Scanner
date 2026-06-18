@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', function () {
     const levelCards = document.querySelectorAll('.level-card');
     const levelImage = document.getElementById('level-image');
+    const backgroundImg = levelImage.querySelector('.background-img');
     const levelDetail = document.getElementById('level-detail');
     const detailTitle = document.getElementById('detail-title');
     const detailDescription = document.getElementById('detail-description');
@@ -71,8 +72,19 @@ document.addEventListener('DOMContentLoaded', function () {
             });
 
             // Скрываем изображение и показываем детальную информацию
-            levelImage.style.display = 'none';
-            levelDetail.style.display = 'flex';
+            backgroundImg.style.display = 'none';
+            levelDetail.classList.add('show');
         });
     });
+
+    // Закрытие модального окна на мобильных
+    const closeBtn = document.getElementById('mobile-close-btn');
+    if (closeBtn) {
+        closeBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            levelDetail.classList.remove('show');
+            // Показываем изображение обратно
+            backgroundImg.style.display = 'block';
+        });
+    }
 });

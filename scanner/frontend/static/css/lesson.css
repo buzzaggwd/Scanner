@@ -275,6 +275,17 @@
     .words-grid {
         grid-template-columns: repeat(2, 1fr);
     }
+
+    /* Кнопка "назад" должна оставаться круглой */
+    .lesson-header .back-btn {
+        width: 44px !important;
+        height: 44px !important;
+        min-width: 44px !important;
+        min-height: 44px !important;
+        border-radius: 50% !important;
+        flex-shrink: 0 !important;
+        padding: 0 !important;
+    }
 }
 
 /* Поддержка цветных тем для урока */

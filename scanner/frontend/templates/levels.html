@@ -59,33 +59,40 @@
                 </div>
             </div>
 
-            <!-- Изображение или детальная информация о уровне -->
-            <div class="image-container" id="level-image">
-                <img src="{% static 'images/background-building.png' %}" alt="Традиционное здание"
-                    class="background-img">
-            </div>
-            <div class="level-detail" id="level-detail" style="display: none;">
-                <h3 id="detail-title">HSK 1 — Базовый</h3>
-                <p id="detail-description">Базовый уровень китайского языка, включающий основные слова и грамматику.</p>
-                <div>
-                    <h4 id="detail-progress-title">Прогресс:</h4>
-                    <div class="progress-container">
-                        <div class="progress-bar-wrapper">
-                            <div class="progress-bar" id="detail-progress" style="width: 25%"></div>
+            <!-- Общий контейнер для изображения и модалки -->
+            <div class="image-wrapper">
+                <!-- Изображение для десктопа -->
+                <div class="image-container" id="level-image">
+                    <img src="{% static 'images/background-building.png' %}" alt="Традиционное здание"
+                        class="background-img">
+                </div>
+
+                <!-- Модальное окно с детальной информацией о уровне (отдельный элемент) -->
+                <div id="level-detail" class="level-detail-modal">
+                    <button class="close-level-detail" id="mobile-close-btn" onclick="document.getElementById('level-detail').classList.remove('show');">&times;</button>
+                    <h3 id="detail-title">HSK 1 — Базовый</h3>
+                    <p id="detail-description">Базовый уровень китайского языка, включающий основные слова и грамматику.</p>
+                    <div>
+                        <h4 id="detail-progress-title">Прогресс:</h4>
+                        <div class="progress-container">
+                            <div class="progress-bar-wrapper">
+                                <div class="progress-bar" id="detail-progress" style="width: 25%"></div>
+                            </div>
+                            <div class="progress-text" id="detail-progress-text">25%</div>
                         </div>
-                        <div class="progress-text" id="detail-progress-text">25%</div>
                     </div>
+                    <div>
+                        <h4 id="detail-features-title">Что включает:</h4>
+                        <ul id="detail-features">
+                            <li>150 базовых слов</li>
+                            <li>Основные грамматические конструкции</li>
+                            <li>Простые диалоги</li>
+                            <li>Базовые фразы для повседневного общения</li>
+                        </ul>
+                    </div>
+                    <div></div>
+                    <a href="{% url 'level' level_id=1 %}" class="continue-btn">Начать обучение</a>
                 </div>
-                <div>
-                    <h4 id="detail-features-title">Что включает:</h4>
-                    <ul id="detail-features">
-                        <li>150 базовых слов</li>
-                        <li>Основные грамматические конструкции</li>
-                        <li>Простые диалоги</li>
-                        <li>Базовые фразы для повседневного общения</li>
-                    </ul>
-                </div>
-                <a href="{% url 'level' level_id=1 %}" class="continue-btn">Начать обучение</a>
             </div>
         </div>
     </div>
