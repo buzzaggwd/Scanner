@@ -77,23 +77,22 @@ console.log('wordsData загружен:', wordsData);
 console.log('Количество слов:', wordsData.length);
 
 // Функция для обновления списка слов из API
-window.updateWordList = function updateWordList() {
-    const telegram_id = 123456789; // ID тестового пользователя
-    
-    fetch(`/api/vocab/?telegram_id=${telegram_id}`)
+window.updateWordList = function() {
+    fetch('/api/get-user-vocab/')
         .then(response => response.json())
         .then(data => {
             if (data.status === 'success') {
-                wordsData = data.words;
-                console.log('Список слов обновлен:', wordsData);
+                // Преобразуем данные в нужный формат (с примерами)
+                wordsData = data.words.map(w => ({
+                    ...w,
+                    examples: w.examples || []  // если приходят примерами
+                }));
                 renderWordList();
             } else {
-                console.error('Ошибка обновления списка:', data.message);
+                console.error('Ошибка обновления:', data.message);
             }
         })
-        .catch(error => {
-            console.error('Ошибка при получении списка слов:', error);
-        });
+        .catch(error => console.error('Ошибка запроса:', error));
 }
 
 // Функция для отрисовки списка слов

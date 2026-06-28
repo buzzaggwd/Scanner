@@ -14,14 +14,13 @@ def get_word_details(request, word_id):
             # Парсим примеры (они хранятся через ;)
             examples = []
             if word.example_sentences:
-                example_pairs = word.example_sentences.split(';')
-                for pair in example_pairs:
-                    parts = pair.split('|')
-                    if len(parts) >= 2:
-                        examples.append({
-                            'chinese': parts[0].strip(),
-                            'translation': parts[1].strip()
-                        })
+                example_list = word.example_sentences.split(';')
+                for i in range(0, len(example_list), 2):
+                    if i + 1 < len(example_list):
+                        chinese = example_list[i].strip()
+                        translation = example_list[i + 1].strip()
+                        if chinese and translation:
+                            examples.append({'chinese': chinese, 'translation': translation})
             
             return JsonResponse({
                 'status': 'success',
@@ -149,32 +148,26 @@ def add_to_vocab(request):
 def get_user_vocab(request):
     if request.method == 'GET':
         try:            
-            # Находим пользователя по telegram_id
             user = request.user
             if not user:
                 return JsonResponse({'status': 'error', 'message': 'Пользователь не найден'})
             
-            # Получаем слова пользователя
             user_vocab = User_to_vocab.objects.filter(user_id=user)
             word_ids = user_vocab.values_list('word_id', flat=True)
             words = Vocabulary.objects.filter(id__in=word_ids)
             
-            # Подготовка данных слов
             words_data = []
             for word in words:
+                # Парсим примеры как в dictionary_view
                 examples = []
                 if word.example_sentences:
-                    example_pairs = word.example_sentences.split(';')
-                    for pair in example_pairs:
-                        parts = pair.split('|')
-                        if len(parts) >= 2:
-                            chinese = parts[0].strip()
-                            translation = parts[1].strip()
+                    example_list = word.example_sentences.split(';')
+                    for i in range(0, len(example_list), 2):
+                        if i + 1 < len(example_list):
+                            chinese = example_list[i].strip()
+                            translation = example_list[i + 1].strip()
                             if chinese and translation:
-                                examples.append({
-                                    'chinese': chinese,
-                                    'translation': translation
-                                })
+                                examples.append({'chinese': chinese, 'translation': translation})
                 
                 words_data.append({
                     'id': word.id,
@@ -183,7 +176,7 @@ def get_user_vocab(request):
                     'translation_eng': word.translation_eng,
                     'translation_cn': word.translation_cn,
                     'audio_url': word.audio_url,
-                    'examples': word.examples_sentences
+                    'examples': examples,
                 })
             
             return JsonResponse({
@@ -277,4 +270,47 @@ def get_user_vocabulary(request):
         'status': 'success',
         'words': words_list,
         'total': len(words_list)
+    })
+
+def dictionary_view(request):
+    user = request.user
+    if not user:
+        return render(request, 'dictionary.html', {'words': [], 'words_json': '[]'})
+    
+    user_vocab_entries = User_to_vocab.objects.filter(user_id=user)
+    word_ids = user_vocab_entries.values_list('word_id', flat=True)
+    
+    words = Vocabulary.objects.filter(id__in=word_ids)
+    
+    words_with_status = []
+    for word in words:
+        user_vocab_entry = user_vocab_entries.get(word_id=word)
+        status = user_vocab_entry.status if user_vocab_entry else 'learning'  # дефолт
+        examples = []
+        if word.example_sentences:
+            example_list = word.example_sentences.split(';')
+            for i in range(0, len(example_list), 2):
+                if i + 1 < len(example_list):
+                    chinese = example_list[i].strip()
+                    translation = example_list[i + 1].strip()
+                    if chinese and translation:
+                        examples.append({'chinese': chinese, 'translation': translation})
+
+        words_with_status.append({
+            'id': word.id,
+            'word': word.word,
+            'transcription': word.transcription,
+            'translation_eng': word.translation_eng,
+            'translation_cn': word.translation_cn,
+            'audio_url': word.audio_url,
+            'examples': examples,
+            'status': status
+        })
+    
+    import json
+    words_json = json.dumps(words_with_status, ensure_ascii=False)
+    
+    return render(request, 'dictionary.html', {
+        'words': words_with_status,
+        'words_json': words_json,
     })

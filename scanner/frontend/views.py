@@ -26,11 +26,14 @@ def home(request):
 
 def dictionary(request):
     # Получаем тестового пользователя
-    test_user = User.objects.filter(username='test_user').first()
+    user = request.user
+    if not user:
+        # если пользователь не найден (например, сессия протухла)
+        return render(request, "dictionary.html", {'words': [], 'words_json': '[]'})
     
-    if test_user:
+    if user:
         # Получаем слова, которые добавил пользователь через user_to_vocab
-        user_vocab = User_to_vocab.objects.filter(user_id=test_user)
+        user_vocab = User_to_vocab.objects.filter(user_id=user)
         word_ids = user_vocab.values_list('word_id', flat=True)
         words = Vocabulary.objects.filter(id__in=word_ids)
         # Создаем словарь для быстрого доступа к статусам
@@ -53,10 +56,7 @@ def dictionary(request):
                     chinese = example_list[i].strip()
                     translation = example_list[i + 1].strip()
                     if chinese and translation:
-                        examples.append({
-                            'chinese': chinese,
-                            'translation': translation
-                        })
+                        examples.append({'chinese': chinese, 'translation': translation})
         
         # Отладка: проверяем статус
         current_status = word_status_dict.get(word.id, 'learning')

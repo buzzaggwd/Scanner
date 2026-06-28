@@ -1,6 +1,14 @@
 {% extends 'base.html' %}
 {% load static %}
 
+{% block extra_js %}
+<script>
+    // Передаём данные из Django в JavaScript
+    window.wordsData = {{ words_json|safe }};
+    console.log('Слова пользователя загружены:', window.wordsData);
+</script>
+{% endblock %}
+
 {% block title %}Словарь{% endblock %}
 
 {% block content %}
