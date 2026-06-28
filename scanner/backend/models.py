@@ -7,7 +7,6 @@ class User(models.Model):
     avatar_url = models.CharField(max_length=255, blank=True, null=True)
     experience_points = models.IntegerField(default=0)
     session_key = models.CharField(max_length=40, unique=True, db_index=True)
-    username = models.CharField(max_length=255, blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

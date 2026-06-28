@@ -4,6 +4,11 @@ from backend.models import Vocabulary, User, User_to_vocab
 from django.utils import timezone
 from datetime import date
 import json
+import uuid
+from django.views.decorators.csrf import csrf_exempt
+import uuid
+from django.core.files.storage import default_storage
+from django.core.files.base import ContentFile
 
 def home(request):
     # Получаем тестового пользователя
@@ -141,33 +146,81 @@ def lesson(request, lesson_id):
 
 
 def profile(request):
-    # Получаем текущего пользователя
     user = request.user
-    
     if user:
-        # Общее количество слов
         total_words = User_to_vocab.objects.filter(user_id=user).count()
-        
-        # Количество слов, добавленных сегодня
         today = date.today()
         words_today = User_to_vocab.objects.filter(
             user_id=user,
             created_at__date=today
         ).count()
-        
-        # Общий опыт
         experience_points = user.experience_points
+        # Если username начинается с "User_" или пользователь гость
+        display_name = user.username if not user.username.startswith('User_') else 'Ваше имя ✏️'
+
     else:
         total_words = 0
         words_today = 0
         experience_points = 0
-    
+        display_name = 'Ваше имя ✏️'
+
     return render(request, "profile.html", {
         'active_page': 'profile',
         'total_words': total_words,
         'words_today': words_today,
-        'experience_points': experience_points
+        'experience_points': experience_points,
+        'user': user,
+        'display_name': display_name,
     })
+
+@csrf_exempt
+def update_avatar(request):
+    if request.method == 'POST' and request.FILES.get('avatar'):
+        user = request.user
+        if not user:
+            return JsonResponse({'status': 'error', 'message': 'Пользователь не найден'}, status=404)
+        
+        avatar_file = request.FILES['avatar']
+        # Генерируем уникальное имя файла
+        ext = avatar_file.name.split('.')[-1]
+        filename = f'avatars/user_{user.id}_{uuid.uuid4().hex[:8]}.{ext}'
+        
+        # Сохраняем файл в media/avatars/
+        path = default_storage.save(filename, ContentFile(avatar_file.read()))
+        avatar_url = default_storage.url(path)
+        
+        # Обновляем пользователя
+        user.avatar_url = avatar_url
+        user.save()
+        
+        return JsonResponse({'status': 'success', 'avatar_url': avatar_url})
+    
+    return JsonResponse({'status': 'error', 'message': 'Неверный запрос'}, status=400)
+
+@csrf_exempt
+def update_username(request):
+    if request.method == 'POST':
+        import json
+        data = json.loads(request.body)
+        new_username = data.get('username', '').strip()
+        
+        if not new_username:
+            return JsonResponse({'status': 'error', 'message': 'Имя не может быть пустым'}, status=400)
+        
+        user = request.user
+        if not user:
+            return JsonResponse({'status': 'error', 'message': 'Пользователь не найден'}, status=404)
+        
+        # Проверяем, не занято ли имя
+        if User.objects.filter(username=new_username).exclude(id=user.id).exists():
+            return JsonResponse({'status': 'error', 'message': 'Это имя уже занято'}, status=400)
+        
+        user.username = new_username
+        user.save()
+        
+        return JsonResponse({'status': 'success', 'username': new_username})
+    
+    return JsonResponse({'status': 'error', 'message': 'Неверный запрос'}, status=400)
 
 def ar_scanner(request):
     return render(request, "ar_scanner.html", {'active_page': 'home'})

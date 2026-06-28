@@ -9,4 +9,6 @@ urlpatterns = [
     path('lesson/<int:lesson_id>/', views.lesson, name='lesson'),
     path('profile/', views.profile, name='profile'),
     path('ar_scanner/', views.ar_scanner, name='ar_scanner'),
+    path('update-avatar/', views.update_avatar, name='update_avatar'),
+    path('update-username/', views.update_username, name='update_username'),
 ]

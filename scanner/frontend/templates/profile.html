@@ -11,12 +11,21 @@
     <div class="profile-container">
         <!-- Карточка профиля -->
         <div class="profile-card">
-            <div class="avatar-container">
-                <img src="{% static 'images/fotka4.png' %}" alt="Аватар" class="avatar">
+            <div class="avatar-container" id="avatar-container" onclick="document.getElementById('avatar-input').click()" style="cursor: pointer;">
+                {% if user and user.avatar_url %}
+                    <img src="{{ user.avatar_url }}" alt="Аватар" class="avatar" id="profile-avatar">
+                {% else %}
+                    <img src="{% static 'images/image1.jpg' %}" alt="Аватар" class="avatar" id="profile-avatar">
+                {% endif %}
+                <input type="file" id="avatar-input" accept="image/*" style="display: none;">
             </div>
             <div class="profile-info">
-                <h2>Майя</h2>
-                <p>Пользователь в Китае</p>
+                <h2 id="profile-username" style="cursor: pointer;">
+                    <span id="username-display">{{ display_name }}</span>
+                    <input type="text" id="username-input" value="{{ user.username|default:'' }}" 
+                        style="display: none; font-size: 24px; font-weight: 600; border: none; border-bottom: 2px solid #4CAF50; outline: none; background: transparent; width: auto; min-width: 100px;">
+                </h2>
+                <p>🏮 Пользователь в Китае 🏮</p>
             </div>
 
             <!-- Статистика -->
@@ -43,7 +52,7 @@
         <!-- Стрик -->
         <div class="streak-card">
             <div class="streak-info">
-                <h3>2-дневный стрик</h3>
+                <h3>1-дневный стрик</h3>
                 <p>Продолжайте изучать слова каждый день!</p>
             </div>
             <div class="streak-icon">🔥</div>
@@ -52,13 +61,6 @@
         <!-- Настройки -->
         <div class="settings-card">
             <h3 class="settings-title">Настройки</h3>
-            <!-- <div class="setting-item">
-                    <span class="setting-label">Уведомления</span>
-                    <label class="toggle-switch">
-                        <input type="checkbox" checked>
-                        <span class="toggle-slider"></span>
-                    </label>
-                </div> -->
             <div class="setting-item">
                 <span class="setting-label">Темная тема</span>
                 <label class="toggle-switch">
