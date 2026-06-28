@@ -31,6 +31,10 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
+CSRF_TRUSTED_ORIGINS = [
+    'https://*.loca.lt',
+    'http://*.loca.lt',
+]
 
 # Application definition
 
@@ -54,6 +58,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'backend.middleware.GuestUserMiddleware',
 ]
 
 ROOT_URLCONF = 'scanner.urls'

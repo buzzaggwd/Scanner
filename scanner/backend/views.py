@@ -34,24 +34,25 @@ def get_word_details(request, word_id):
                 'examples': examples
             })
         except Vocabulary.DoesNotExist:
-            return JsonResponse({'status': 'error', 'message': 'Word not found'}, status=404)
+            return JsonResponse({'status': 'error', 'message': 'Слово не найдено'}, status=404)
 
 @csrf_exempt
 def process_scan(request):
     if request.method == 'POST':
         data = json.loads(request.body)
         word_text = data.get('word').lower()
-        telegram_id = data.get('telegram_id')
 
         try:
             # Проверяем, существует ли пользователь
-            user = User.objects.get(telegram_id=telegram_id)
+            user = request.user
+            if not user:
+                return JsonResponse({'status': 'error', 'message': 'Пользователь не найден'}, status=404)
             
             # Ищем слово в базе данных
             vocab_entry = Vocabulary.objects.filter(word__iexact=word_text).first()
             
             if not vocab_entry:
-                return JsonResponse({'status': 'error', 'message': 'Word not found in database'}, status=404)
+                return JsonResponse({'status': 'error', 'message': 'Слово не найдено в базе'}, status=404)
 
             # Проверяем, есть ли слово уже в словаре пользователя
             is_in_vocab = User_to_vocab.objects.filter(
@@ -69,7 +70,7 @@ def process_scan(request):
             })
 
         except User.DoesNotExist:
-            return JsonResponse({'status': 'error', 'message': 'User not found'}, status=404)
+            return JsonResponse({'status': 'error', 'message': 'Пользователь не найден'}, status=404)
 
 @csrf_exempt
 def add_to_vocab(request):
@@ -77,12 +78,11 @@ def add_to_vocab(request):
         try:
             data = json.loads(request.body)
             word_id = data.get('word_id')
-            telegram_id = data.get('telegram_id')
             
             # Находим пользователя по telegram_id
-            user = User.objects.filter(telegram_id=telegram_id).first()
+            user = request.user
             if not user:
-                return JsonResponse({'status': 'error', 'message': 'Пользователь не найден'})
+                return JsonResponse({'status': 'error', 'message': 'Пользователь не найден'}, status=404)
             
             # Находим слово
             word = Vocabulary.objects.filter(id=word_id).first()
@@ -148,11 +148,9 @@ def add_to_vocab(request):
 @csrf_exempt
 def get_user_vocab(request):
     if request.method == 'GET':
-        try:
-            telegram_id = request.GET.get('telegram_id', 123456789)
-            
+        try:            
             # Находим пользователя по telegram_id
-            user = User.objects.filter(telegram_id=telegram_id).first()
+            user = request.user
             if not user:
                 return JsonResponse({'status': 'error', 'message': 'Пользователь не найден'})
             
@@ -204,10 +202,9 @@ def update_word_status(request):
         try:
             data = json.loads(request.body)
             word_id = data.get('word_id')
-            telegram_id = data.get('telegram_id', 123456789)
 
             # Находим пользователя
-            user = User.objects.filter(telegram_id=telegram_id).first()
+            user = request.user
             if not user:
                 return JsonResponse({'status': 'error', 'message': 'Пользователь не найден'})
 
