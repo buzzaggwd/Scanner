@@ -88,7 +88,7 @@ def level(request, level_id):
         1: {'name': 'Базовый', 'progress': 25, 'lessons': [
             {'id': 1, 'number': 1, 'title': 'Предметы в моей комнате', 'description': 'Сканируйте и узнавайте названия бытовых предметов', 'status': 'completed'},
             {'id': 2, 'number': 2, 'title': 'Еда и напитки', 'description': 'Сканируйте продукты в кухне и узнавайте их названия', 'status': 'available'},
-            {'id': 3, 'number': 3, 'title': 'Одежда и аксессуары', 'description': 'Распознавайте одежду и украшения с помощью сканера', 'status': 'available'},
+            {'id': 3, 'number': 3, 'title': 'Одежда и аксессуары', 'description': 'Распознавайте одежду и украшения с помощью сканера', 'status': 'locked'},
             {'id': 4, 'number': 4, 'title': 'Техника и гаджеты', 'description': 'Узнавайте названия электроники и устройств', 'status': 'locked'},
             {'id': 5, 'number': 5, 'title': 'Товары в магазине', 'description': 'Сканируйте товары при покупках в магазине', 'status': 'locked'},
         ]},
