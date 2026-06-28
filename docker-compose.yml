@@ -1,0 +1,12 @@
+services:
+  web:
+    build: .                # использует Dockerfile из текущей папки
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./scanner:/app      # монтируем папку scanner внутрь контейнера
+      - ./static_volume:/app/static
+      - ./media_volume:/app/media
+    environment:
+      - DJANGO_SETTINGS_MODULE=scanner.settings
+      - DEBUG=1
