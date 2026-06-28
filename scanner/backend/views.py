@@ -255,3 +255,26 @@ def translate_text(request):
             })
         else:
             return JsonResponse({'status': 'error', 'message': 'Translation failed'}, status=500)
+
+@csrf_exempt
+def get_user_vocabulary(request):
+    if request.method != 'GET':
+        return JsonResponse({'status': 'error', 'message': 'Метод не разрешен'}, status=405)
+
+    user = request.user
+    if not user:
+        return JsonResponse({'status': 'error', 'message': 'Пользователь не найден'}, status=404)
+
+    user_words = Vocabulary.objects.filter(
+        user_to_vocab__user_id=user
+    ).values(
+        'id', 'word', 'transcription', 'translation_eng', 'translation_cn', 'audio_url'
+    )
+
+    words_list = list(user_words)
+
+    return JsonResponse({
+        'status': 'success',
+        'words': words_list,
+        'total': len(words_list)
+    })
