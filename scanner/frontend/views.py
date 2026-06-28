@@ -141,22 +141,22 @@ def lesson(request, lesson_id):
 
 
 def profile(request):
-    # Получаем тестового пользователя
-    test_user = User.objects.filter(username='test_user').first()
+    # Получаем текущего пользователя
+    user = request.user
     
-    if test_user:
+    if user:
         # Общее количество слов
-        total_words = User_to_vocab.objects.filter(user_id=test_user).count()
+        total_words = User_to_vocab.objects.filter(user_id=user).count()
         
         # Количество слов, добавленных сегодня
         today = date.today()
         words_today = User_to_vocab.objects.filter(
-            user_id=test_user,
+            user_id=user,
             created_at__date=today
         ).count()
         
         # Общий опыт
-        experience_points = test_user.experience_points
+        experience_points = user.experience_points
     else:
         total_words = 0
         words_today = 0
