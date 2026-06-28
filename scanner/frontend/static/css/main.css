@@ -902,6 +902,55 @@ body {
     box-shadow: var(--shadow-lg);
 }
 
+.word-list-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 60vh; /* или 50vh — чтобы было достаточно места на мобилке */
+    height: 100%; /* если родитель задаёт высоту */
+    width: 100%;
+    position: relative;
+}
+
+.word-list-title {
+    flex-shrink: 0; /* не сжимается */
+    margin-bottom: 12px;
+    padding: 0 16px;
+}
+
+/* Контейнер для списка или сообщения */
+.word-list-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;  /* центрируем по вертикали */
+    align-items: center;      /* центрируем по горизонтали */
+    overflow-y: auto;         /* если слов много, скролл */
+    padding: 0 16px 16px;
+}
+
+.word-list-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-height: 50vh;
+    width: 100%;
+}
+
+.word-info-no-word {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #999 !important;
+    font-size: 16px;
+    text-align: center;
+    width: 80%;
+    max-width: 300px;
+    padding: 0;
+    margin: 0;
+
+}
+
 /* Десктопная версия модалки */
 #word-details-modal {
     position: absolute;

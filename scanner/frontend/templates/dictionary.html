@@ -34,17 +34,21 @@
             <!-- Список слов -->
             <div class="word-list-container">
                 <h2 class="word-list-title">Слова</h2>
-                {% for word in words %}
-                <div class="dictionary-word-item word-item {% if forloop.first %}active{% endif %}"
-                    data-word-id="{{ word.id }}">
-                    <div class="word-info">
-                        <span class="word-chinese">{{ word.translation_cn }}</span>
-                        <span class="word-translation">{{ word.word }}</span>
-                        <span class="word-pinyin">{{ word.transcription }}</span>
+                {% if words %}
+                    {% for word in words %}
+                    <div class="dictionary-word-item word-item {% if forloop.first %}active{% endif %}"
+                        data-word-id="{{ word.id }}">
+                        <div class="word-info">
+                            <span class="word-chinese">{{ word.translation_cn }}</span>
+                            <span class="word-translation">{{ word.word }}</span>
+                            <span class="word-pinyin">{{ word.transcription }}</span>
+                        </div>
+                        <div class="word-status toggle-status {% if word.status == 'learned' %}learned{% elif word.status == 'learning' %}learning{% else %}learning{% endif %}" data-word-id="{{ word.id }}" onclick="toggleWordStatus(this, event)"></div>
                     </div>
-                    <div class="word-status toggle-status {% if word.status == 'learned' %}learned{% elif word.status == 'learning' %}learning{% else %}learning{% endif %}" data-word-id="{{ word.id }}" onclick="toggleWordStatus(this, event)"></div>
-                </div>
-                {% endfor %}
+                    {% endfor %}
+                {% else %}
+                    <div class="word-info-no-word">Здесь пока пусто</div>
+                {% endif %}
             </div>
 
             <!-- Детали слова -->
