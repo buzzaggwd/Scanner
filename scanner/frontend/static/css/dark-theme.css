@@ -1,0 +1,365 @@
+/* Определяем переменные для светлой темы (по умолчанию) */
+:root {
+  --bg-primary: #f4f6f9;
+  --bg-secondary: #ffffff;
+  --text-primary: #1a202c;
+  --text-secondary: #4a5568;
+  --accent-primary: #4F46E5;
+  --accent-secondary: #10B981;
+  --border-color: #e2e8f0;
+  --shadow-color: rgba(0, 0, 0, 0.1);
+}
+
+/* Переопределяем переменные для тёмной темы */
+.dark-theme {
+  --bg-primary: #1a1a1a;
+  --bg-secondary: #2d2d2d;
+  --text-primary: #e2e8f0;
+  --text-secondary: #a0aec0;
+  --accent-primary: #6366F1;
+  --accent-secondary: #34D399;
+  --border-color: #4a5568;
+  --shadow-color: rgba(0, 0, 0, 0.3);
+}
+
+/* Применяем переменные к элементам */
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.card, .profile-card, .settings-card, .word-item {
+  background-color: var(--bg-secondary);
+  color: var(--text-primary);
+  border-color: var(--border-color);
+  box-shadow: 0 4px 6px var(--shadow-color);
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Акцентные элементы, например, кнопки */
+.btn-primary {
+  background-color: var(--accent-primary);
+  color: #ffffff;
+}
+
+/* Текст */
+.text-secondary {
+  color: var(--text-secondary);
+}
+
+/* Применяем переменные ко всей странице */
+body {
+  background-color: var(--bg-page);
+  color: var(--text-primary);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Карточки и блоки */
+.profile-card,
+.settings-card,
+.word-item,
+.dictionary-word-item,
+.streak-card {
+  background-color: var(--bg-card);
+  color: var(--text-primary);
+  border-color: var(--border-color);
+  box-shadow: 0 4px 6px var(--shadow-color);
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Тексты */
+.text-secondary,
+.word-pinyin,
+.stat-label,
+.setting-label {
+  color: var(--text-secondary);
+}
+
+/* Поля ввода */
+.search-input,
+input[type="text"],
+input[type="email"],
+textarea {
+  background-color: var(--bg-input);
+  color: var(--text-primary);
+  border-color: var(--border-color);
+}
+
+/* Кнопки с акцентными цветами */
+.btn-primary {
+  background-color: var(--accent-blue);
+  color: var(--text-on-accent);
+}
+
+.btn-success {
+  background-color: var(--accent-green);
+  color: var(--text-on-accent);
+}
+
+.btn-warning {
+  background-color: var(--accent-orange);
+  color: var(--text-on-accent);
+}
+
+.btn-purple {
+  background-color: var(--accent-purple);
+  color: var(--text-on-accent);
+}
+
+/* Статусы слов (learning / learned) */
+.word-status.learning {
+  background-color: var(--accent-orange);
+}
+
+.word-status.learned {
+  background-color: var(--accent-green);
+}
+
+/* ===== СВЕТЛАЯ ТЕМА (по умолчанию) ===== */
+:root {
+  /* Фоны */
+  --bg-page: #f4f6f9;
+  --bg-card: #ffffff;
+  --bg-input: #ffffff;
+  --bg-hover: #f1f5f9;
+
+  /* Текст */
+  --text-primary: #1a202c;
+  --text-secondary: #4a5568;
+  --text-muted: #a0aec0;
+  --text-on-accent: #ffffff;
+
+  /* Границы и тени */
+  --border-color: #e2e8f0;
+  --shadow-color: rgba(0, 0, 0, 0.08);
+
+  /* Цветные акценты (оставляем яркими) */
+  --accent-blue: #4F46E5;
+  --accent-green: #10B981;
+  --accent-orange: #F59E0B;
+  --accent-purple: #8B5CF6;
+}
+
+/* ===== ТЁМНАЯ ТЕМА ===== */
+body.dark-theme {
+  /* Фоны */
+  --bg-page: #121212;
+  --bg-card: #1e1e1e;
+  --bg-input: #2d2d2d;
+  --bg-hover: #2d2d2d;
+
+  /* Текст */
+  --text-primary: #e2e8f0;
+  --text-secondary: #a0aec0;
+  --text-muted: #718096;
+  --text-on-accent: #ffffff;
+
+  /* Границы и тени */
+  --border-color: #3d3d3d;
+  --shadow-color: rgba(0, 0, 0, 0.4);
+
+  /* Акценты в тёмной теме можно оставить теми же или слегка приглушить */
+  --accent-blue: #6366F1;
+  --accent-green: #34D399;
+  --accent-orange: #FBBF24;
+  --accent-purple: #A78BFA;
+}
+
+:root {
+  /* ... уже существующие переменные ... */
+  
+  /* Новые переменные для элементов, которые ты перечислил */
+  --bg-header: #ffffff;
+  --bg-stat-card: #ffffff;
+  --bg-challenge-card: #ffffff;
+  --bg-word-list: #ffffff;
+  --bg-word-item-active: #f1f5f9;
+  --bg-category-btn: #e2e8f0;
+  --bg-category-btn-active: #4F46E5;
+  --bg-modal: #ffffff;
+  --bg-level-card: #ffffff;
+  --bg-level-progress: #e2e8f0;
+  --color-level-progress: #4F46E5;
+  
+  /* Цвета для границ и теней */
+  --border-color-light: #e2e8f0;
+}
+
+body.dark-theme {
+  /* Переопределяем новые переменные для тёмной темы */
+  --bg-header: #1e1e1e;
+  --bg-stat-card: #2d2d2d;
+  --bg-challenge-card: #2d2d2d;
+  --bg-word-list: #2d2d2d;
+  --bg-word-item-active: #3d3d3d;
+  --bg-category-btn: #3d3d3d;
+  --bg-category-btn-active: #6366F1;
+  --bg-modal: #2d2d2d;
+  --bg-level-card: #2d2d2d;
+  --bg-level-progress: #4a5568;
+  --color-level-progress: #6366F1;
+  
+  --border-color-light: #3d3d3d;
+}
+
+/* ===== Хедер ===== */
+.header-content {
+  background-color: var(--bg-header);
+  border-bottom: 1px solid var(--border-color-light);
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+/* ===== Карточки статистики ===== */
+.stat-card {
+  background-color: var(--bg-stat-card);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color-light);
+  box-shadow: 0 2px 4px var(--shadow-color);
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+.stat-card .stat-value {
+  color: var(--text-primary);
+}
+
+.stat-card .stat-label {
+  color: var(--text-secondary);
+}
+
+/* ===== Карточки челленджей ===== */
+.challenge-card {
+  background-color: var(--bg-challenge-card);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color-light);
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+/* ===== Список слов и контейнер ===== */
+.word-list-container {
+  background-color: var(--bg-word-list);
+  border: 1px solid var(--border-color-light);
+  border-radius: 12px;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+/* ===== Элемент списка слов ===== */
+.dictionary-word-item {
+  background-color: transparent;
+  color: var(--text-primary);
+  border-bottom: 1px solid var(--border-color-light);
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+.dictionary-word-item.active {
+  background-color: var(--bg-word-item-active);
+  border-left: 4px solid var(--accent-primary);
+}
+
+.dictionary-word-item .word-chinese {
+  color: var(--text-primary);
+}
+
+.dictionary-word-item .word-translation,
+.dictionary-word-item .word-pinyin {
+  color: var(--text-secondary);
+}
+
+/* ===== Кнопки категорий ===== */
+.category-btn {
+  background-color: var(--bg-category-btn);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-color-light);
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+.category-btn.active {
+  background-color: var(--bg-category-btn-active);
+  color: var(--text-on-accent);
+  border-color: var(--bg-category-btn-active);
+}
+
+/* ===== Модальное окно (детали слова) ===== */
+.word-details-modal,
+.word-details {
+  background-color: var(--bg-modal);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color-light);
+  box-shadow: 0 8px 24px var(--shadow-color);
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+.word-details-modal .detail-chinese,
+.word-details .detail-chinese {
+  color: var(--text-primary);
+}
+
+.word-details-modal .detail-pinyin,
+.word-details .detail-pinyin {
+  color: var(--text-secondary);
+}
+
+.word-details-modal .detail-translation,
+.word-details .detail-translation {
+  color: var(--text-secondary);
+}
+
+.word-details-modal .example-chinese,
+.word-details .example-chinese {
+  color: var(--text-primary);
+}
+
+.word-details-modal .example-translation,
+.word-details .example-translation {
+  color: var(--text-secondary);
+}
+
+/* ===== Карточки уровней ===== */
+.level-card {
+  background-color: var(--bg-level-card);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color-light);
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+/* ===== Прогресс уровня ===== */
+.level-progress {
+  background-color: var(--bg-level-progress);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.level-progress .progress-bar {
+  background-color: var(--color-level-progress);
+  height: 8px;
+  border-radius: 8px;
+  transition: width 0.3s ease;
+}
+
+/* ===== Дополнительно: другие блоки ===== */
+/* Например, если есть карточки уроков, настройки, профиль и т.д. */
+.profile-card,
+.settings-card,
+.streak-card {
+  background-color: var(--bg-card);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color-light);
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Поля ввода, если они есть в этих блоках */
+input, textarea, select {
+  background-color: var(--bg-input);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color-light);
+}
+
+/* Кнопки с акцентными цветами (оставляем цветными) */
+.btn-primary { background-color: var(--accent-blue); color: var(--text-on-accent); }
+.btn-success { background-color: var(--accent-green); color: var(--text-on-accent); }
+.btn-warning { background-color: var(--accent-orange); color: var(--text-on-accent); }
+.btn-purple { background-color: var(--accent-purple); color: var(--text-on-accent); }
+
+/* Статусы слов */
+.word-status.learning { background-color: var(--accent-orange); }
+.word-status.learned { background-color: var(--accent-green); }

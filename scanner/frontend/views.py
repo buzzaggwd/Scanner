@@ -156,7 +156,7 @@ def profile(request):
         ).count()
         experience_points = user.experience_points
         # Если username начинается с "User_" или пользователь гость
-        display_name = user.username if not user.username.startswith('User_') else 'Ваше имя ✏️'
+        display_name = user.username if not user.username.startswith('User_') else 'Ваше имя ✐'
 
     else:
         total_words = 0
